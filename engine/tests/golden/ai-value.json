@@ -1,0 +1,38 @@
+{
+  "case_id": "ai-value",
+  "label": "Air India Value — statute still applies, fare line abstains",
+  "rule_id": null,
+  "refund_minor": 113800,
+  "refund_formatted": "₹1,138.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 27000,
+      "contribution_formatted": "₹270.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 70800,
+      "contribution_formatted": "₹708.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax PSF (Passenger Service Fee)",
+      "contribution_minor": 16000,
+      "contribution_formatted": "₹160.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    }
+  ],
+  "abstained": [
+    "Fare component: The applicable policy version cannot be established: keyed to the booking date the applicable rule is AI-ANY-OBS-20260415; keyed to the cancellation date it is None. The source does not state which date governs. Supply the fare conditions issued with the ticket, or a source that states the effective-date basis."
+  ],
+  "warnings": []
+}

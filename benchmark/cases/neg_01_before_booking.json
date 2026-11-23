@@ -1,0 +1,47 @@
+{
+  "id": "neg_01_before_booking",
+  "set": "negative",
+  "description": "Cancellation timestamp precedes booking date -> BEFORE_BOOKING",
+  "provenance": "synthetic",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BOM",
+      "booking_date": "2025-11-20",
+      "departure_local": "2026-01-15T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "6700.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.00"
+        },
+        {
+          "code": "PSF",
+          "amount": "160.00"
+        }
+      ],
+      "total_paid": "7920.00",
+      "fare_family": "SAVER"
+    },
+    "cancellation": {
+      "instant_local": "2025-11-10T12:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "expected": {
+    "must_abstain": true,
+    "abstain_target": "TOTAL",
+    "prohibit_false_confidence": true
+  },
+  "expectation_source": "Derived from the corpus and this engine's own semantics. NOT a client-supplied or carrier-supplied reference answer."
+}

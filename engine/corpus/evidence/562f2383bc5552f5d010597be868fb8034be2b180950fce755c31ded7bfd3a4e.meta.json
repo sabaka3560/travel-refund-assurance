@@ -1,0 +1,12 @@
+{
+  "sha256": "562f2383bc5552f5d010597be868fb8034be2b180950fce755c31ded7bfd3a4e",
+  "bytes": 816433,
+  "content_type": "image/jpeg",
+  "source_url": "client_upload:real_spicejet_flight_ticket.jpg",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:47:13.461505+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: real_spicejet_flight_ticket.jpg"
+}

@@ -1,0 +1,89 @@
+{
+  "case_id": "ef3140b9e274",
+  "created_at": "2026-09-07T23:47:41.920627+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-07.2",
+  "request_canonical_sha256": "908daa8943467aaedeb41d038cf137f40f6eac86e7f9e1b301e2204801c34705",
+  "request": {
+    "ticket": {
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "route": "BLR-BOM",
+      "fare_family": "Flexi",
+      "booking_date": "2023-10-22",
+      "booking_time": null,
+      "departure_local": "2023-10-25T14:40:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "4800.0",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "240.0"
+        },
+        {
+          "code": "UDF",
+          "amount": "560.0"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "5600.0",
+      "corporate": false,
+      "reissued": false,
+      "partially_used": false
+    },
+    "cancellation": {
+      "instant_local": "2023-10-20T14:40:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "ACTUAL_RECORD",
+      "source_ref": "evidence_sha:3e7a8fdd1736bc563fdbacb22d3cce32e6401f52402ae5d0f99860494b1280d3",
+      "cause": "PASSENGER_INITIATED"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "ef3140b9e274",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-07.2",
+    "cancellation": {
+      "instant": "2023-10-20T14:40:00+05:30",
+      "basis": "ACTUAL_RECORD",
+      "preset_label": null,
+      "source_ref": "evidence_sha:3e7a8fdd1736bc563fdbacb22d3cce32e6401f52402ae5d0f99860494b1280d3"
+    },
+    "timeline": {
+      "status": "BEFORE_BOOKING",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": null,
+      "minor": null,
+      "status": "NONE",
+      "excludes": []
+    },
+    "confidence": "INSUFFICIENT",
+    "review_status": "NOT_REQUIRED",
+    "lines": [],
+    "assumptions": [],
+    "unresolved": [],
+    "conflicts": [],
+    "rules_rejected": [],
+    "comparison": null,
+    "cancel_instant": "2023-10-20T14:40:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": null,
+    "refund_total_minor": null,
+    "abstained": [
+      "Cancellation at 2023-10-20T14:40:00+05:30 precedes the booking on 2023-10-22. The timeline is invalid; no calculation is possible."
+    ],
+    "warnings": [],
+    "rule_id": null,
+    "rule_source": null
+  }
+}

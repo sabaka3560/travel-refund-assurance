@@ -1,0 +1,45 @@
+{
+  "id": "pos_04_6e_t120",
+  "set": "positive",
+  "description": "IndiGo domestic standard fare at T-120h",
+  "provenance": "synthetic",
+  "request": {
+    "ticket": {
+      "carrier": "6E",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BLR",
+      "booking_date": "2025-10-15",
+      "departure_local": "2026-01-20T06:20:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "5400.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "270.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "6378.00",
+      "fare_family": null
+    },
+    "cancellation": {
+      "instant_local": "2026-01-15T06:20:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "expected": {
+    "total_minor": 237900,
+    "total_status": "COMPLETE",
+    "confidence": "LOW"
+  },
+  "expectation_source": "Derived from the corpus and this engine's own semantics. NOT a client-supplied or carrier-supplied reference answer."
+}

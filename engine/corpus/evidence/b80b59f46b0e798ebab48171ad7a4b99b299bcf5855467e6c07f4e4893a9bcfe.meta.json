@@ -1,0 +1,12 @@
+{
+  "sha256": "b80b59f46b0e798ebab48171ad7a4b99b299bcf5855467e6c07f4e4893a9bcfe",
+  "bytes": 99743,
+  "content_type": "image/png",
+  "source_url": "client_upload:08_indigo_BLR-HYD_photo.png",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-11T09:45:44.349445+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 08_indigo_BLR-HYD_photo.png"
+}

@@ -1,0 +1,98 @@
+{
+  "case_id": "9da4b509aa28",
+  "created_at": "2026-09-07T23:39:40.934268+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-07.2",
+  "request_canonical_sha256": "212530bdb4ff0a406f9b92c9205072245dcb809945c3d523e40b09b96c9a2e41",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "route": "DEL-BOM",
+      "fare_family": null,
+      "booking_date": "2023-10-24",
+      "booking_time": null,
+      "departure_local": "2023-10-26T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "6700.0",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.0"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.0"
+        },
+        {
+          "code": "PSF",
+          "amount": "236.0"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [
+        {
+          "code": "AGENCY",
+          "amount": "300.0"
+        }
+      ],
+      "total_paid": "8420.0",
+      "corporate": false,
+      "reissued": false,
+      "partially_used": false
+    },
+    "cancellation": {
+      "instant_local": "2023-10-21T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "ACTUAL_RECORD",
+      "source_ref": "evidence_sha:562f2383bc5552f5d010597be868fb8034be2b180950fce755c31ded7bfd3a4e",
+      "cause": "PASSENGER_INITIATED"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "9da4b509aa28",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-07.2",
+    "cancellation": {
+      "instant": "2023-10-21T18:00:00+05:30",
+      "basis": "ACTUAL_RECORD",
+      "preset_label": null,
+      "source_ref": "evidence_sha:562f2383bc5552f5d010597be868fb8034be2b180950fce755c31ded7bfd3a4e"
+    },
+    "timeline": {
+      "status": "BEFORE_BOOKING",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": null,
+      "minor": null,
+      "status": "NONE",
+      "excludes": []
+    },
+    "confidence": "INSUFFICIENT",
+    "review_status": "NOT_REQUIRED",
+    "lines": [],
+    "assumptions": [],
+    "unresolved": [],
+    "conflicts": [],
+    "rules_rejected": [],
+    "comparison": null,
+    "cancel_instant": "2023-10-21T18:00:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": null,
+    "refund_total_minor": null,
+    "abstained": [
+      "Cancellation at 2023-10-21T18:00:00+05:30 precedes the booking on 2023-10-24. The timeline is invalid; no calculation is possible."
+    ],
+    "warnings": [],
+    "rule_id": null,
+    "rule_source": null
+  }
+}

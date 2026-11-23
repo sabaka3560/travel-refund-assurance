@@ -1,0 +1,199 @@
+{
+  "case_id": "d9391ae2520e",
+  "created_at": "2026-09-08T16:04:15.789843+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.3",
+  "request_canonical_sha256": "50c4ddd864bd3b1bf530d87a7bf9ea1d25b53e90ed9b55bd6e6d0e6567ec5fab",
+  "request": {
+    "ticket": {
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "origin": "BLR",
+      "destination": "COK",
+      "route": "BLR→COK",
+      "fare_family": "CLASSIC",
+      "booking_date": "2023-10-12",
+      "booking_time": null,
+      "departure_local": "2026-09-25T11:05:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "3400.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "170.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "560.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "4130.00",
+      "corporate": false,
+      "reissued": false,
+      "partially_used": false
+    },
+    "cancellation": {
+      "instant_local": "2026-09-10T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO",
+      "source_ref": null,
+      "preset_label": null,
+      "cause": "PASSENGER_INITIATED"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "d9391ae2520e",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.3",
+    "cancellation": {
+      "instant": "2026-09-10T18:00:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 1271100,
+      "hours_to_departure": "353.08",
+      "days_to_departure_display": "14"
+    },
+    "total": {
+      "amount": "₹730.00",
+      "minor": 73000,
+      "status": "PARTIAL",
+      "excludes": [
+        "Base fare (version disagreement / missing evidence)"
+      ]
+    },
+    "confidence": "LOW",
+    "review_status": "NOT_REQUIRED",
+    "lines": [
+      {
+        "label": "Tax K3 (GST on air transport)",
+        "original": "₹170.00",
+        "original_minor": 17000,
+        "contribution": "₹170.00",
+        "contribution_minor": 17000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Tax UDF (User Development Fee)",
+        "original": "₹560.00",
+        "original_minor": 56000,
+        "contribution": "₹560.00",
+        "contribution_minor": 56000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Base fare",
+        "original": "₹3,400.00",
+        "original_minor": 340000,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "INSUFFICIENT",
+        "classification_confidence": null,
+        "basis": "The applicable policy version cannot be established: keyed to the booking date the applicable rule is None; keyed to the cancellation date it is IX-DOM-OBS-20260905-CLASSIC. The source does not state which date governs. Supply the fare conditions issued with the ticket, or a source that states the effective-date basis.",
+        "source_url": null,
+        "evidence": null
+      }
+    ],
+    "assumptions": [],
+    "unresolved": [
+      "Fare component: The applicable policy version cannot be established: keyed to the booking date the applicable rule is None; keyed to the cancellation date it is IX-DOM-OBS-20260905-CLASSIC. The source does not state which date governs. Supply the fare conditions issued with the ticket, or a source that states the effective-date basis."
+    ],
+    "conflicts": [],
+    "rules_rejected": [
+      {
+        "policy_id": "IX-DOM-OBS-20260905-VALBIZ",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-VALBIZ: fare family CLASSIC not in ['VALUE', 'BUSINESS']"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-LITE",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-LITE: fare family CLASSIC not in ['LITE']"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-CLASSIC",
+        "reason_code": "TEMPORAL",
+        "detail": "IX-DOM-OBS-20260905-CLASSIC: temporally invalid (key date 2023-10-12 precedes earliest capture held 2026-09-05)"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-FLEX",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-FLEX: fare family CLASSIC not in ['FLEX']"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-VALBIZ",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-VALBIZ: fare family CLASSIC not in ['VALUE', 'BUSINESS']"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-LITE",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-LITE: fare family CLASSIC not in ['LITE']"
+      },
+      {
+        "policy_id": "IX-DOM-OBS-20260905-FLEX",
+        "reason_code": "FARE_FAMILY",
+        "detail": "IX-DOM-OBS-20260905-FLEX: fare family CLASSIC not in ['FLEX']"
+      }
+    ],
+    "comparison": null,
+    "cancel_instant": "2026-09-10T18:00:00+05:30",
+    "hours_before": 353.08,
+    "refund_total": "₹730.00",
+    "refund_total_minor": 73000,
+    "abstained": [
+      "Fare component: The applicable policy version cannot be established: keyed to the booking date the applicable rule is None; keyed to the cancellation date it is IX-DOM-OBS-20260905-CLASSIC. The source does not state which date governs. Supply the fare conditions issued with the ticket, or a source that states the effective-date basis."
+    ],
+    "warnings": [],
+    "rule_id": null,
+    "rule_source": null
+  }
+}

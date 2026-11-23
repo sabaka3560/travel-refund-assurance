@@ -1,0 +1,60 @@
+{
+  "case_id": "sg-before",
+  "label": "Booked BEFORE the 12-Dec-2025 rule change",
+  "rule_id": "SG-DOM-STATED-20250228",
+  "refund_minor": 472000,
+  "refund_formatted": "₹4,720.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 35200,
+      "contribution_formatted": "₹352.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 70800,
+      "contribution_formatted": "₹708.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax PSF (Passenger Service Fee)",
+      "contribution_minor": 16000,
+      "contribution_formatted": "₹160.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Carrier surcharge YR",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 350000,
+      "contribution_formatted": "₹3,500.00",
+      "confidence": "MEDIUM"
+    },
+    {
+      "label": "Cancellation penalty",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "MEDIUM"
+    },
+    {
+      "label": "Seller fee AGENCY",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "abstained": [
+    "Carrier surcharge YR: refundability not determinable"
+  ],
+  "warnings": [
+    "SG-DOM-STATED-20250228: The 2950/2999 pair is the CHANGE fee, not cancellation - not encoded here.",
+    "SG-DOM-STATED-20250228: This is the single most valuable test fixture in the corpus: a SpiceJet ticket booked 2025-02-27 vs 2025-03-01, both cancelled at T-120h, must yield different fees.",
+    "SG-DOM-STATED-20250228: Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+  ]
+}

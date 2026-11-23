@@ -1,0 +1,45 @@
+{
+  "id": "pos_05_qp_flexi_t120",
+  "set": "positive",
+  "description": "Akasa Flexi stated policy with carrier effective date",
+  "provenance": "synthetic",
+  "request": {
+    "ticket": {
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "origin": "BLR",
+      "destination": "BOM",
+      "booking_date": "2026-06-10",
+      "departure_local": "2026-09-25T14:40:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "4800.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "240.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "560.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "5600.00",
+      "fare_family": "FLEXI"
+    },
+    "cancellation": {
+      "instant_local": "2026-09-20T14:40:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "expected": {
+    "total_minor": 310100,
+    "total_status": "COMPLETE",
+    "confidence": "MEDIUM"
+  },
+  "expectation_source": "Derived from the corpus and this engine's own semantics. NOT a client-supplied or carrier-supplied reference answer."
+}

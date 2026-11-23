@@ -1,0 +1,1167 @@
+{
+  "$schema": "./policies.schema.json",
+  "corpus_version": "2026-09-08.4",
+  "scope": "India domestic + India-origin international, retail published fares, 5 carriers",
+  "_README": [
+    "EVERY rule in this file was extracted from a primary source: the carrier's own live page,",
+    "its mandatory-disclosure PDF, or a dated Internet Archive capture. The verbatim quote that",
+    "produced each rule is stored on the rule itself. Nothing here is invented.",
+    "",
+    "date_basis is the most important field. STATED means the carrier itself declares the",
+    "effective date on the page. OBSERVED means we only know a capture existed on that date and",
+    "the true start of the rule is unknown - which caps confidence at LOW. Only SpiceJet and",
+    "Akasa self-document effective dates; the other three do not.",
+    "",
+    "applicability_key records WHICH date the version boundary keys to. SpiceJet keys to BOOKING",
+    "date ('for bookings before/on-or-after'). Where unknown it is UNKNOWN, not assumed."
+  ],
+  "confidence_rules": {
+    "STATED": "MEDIUM — carrier declares its own effective date",
+    "OBSERVED": "LOW — capture date only; true rule start unknown",
+    "note": "No policy-snapshot rule may ever exceed MEDIUM. Only a filed fare rule (ATPCO Cat 33) or an authoritative servicing quote can reach HIGH, and none of these carriers file Cat 33 for the tickets in scope."
+  },
+  "carriers": {
+    "6E": {
+      "name": "IndiGo",
+      "pss": "Navitaire",
+      "files_atpco_cat33": false,
+      "observed_through": "2026-08-22",
+      "observed_through_basis": "date of the preserved evidence copy actually held"
+    },
+    "AI": {
+      "name": "Air India",
+      "pss": "Amadeus Altea",
+      "files_atpco_cat33": true,
+      "observed_through": "2026-04-15",
+      "observed_through_basis": "date of the preserved evidence copy actually held"
+    },
+    "IX": {
+      "name": "Air India Express",
+      "pss": "unconfirmed",
+      "files_atpco_cat33": false,
+      "observed_through": "2026-09-05",
+      "observed_through_basis": "date of the preserved evidence copy actually held"
+    },
+    "QP": {
+      "name": "Akasa Air",
+      "pss": "Navitaire",
+      "files_atpco_cat33": false,
+      "observed_through": "2026-04-18",
+      "observed_through_basis": "date of the preserved evidence copy actually held"
+    },
+    "SG": {
+      "name": "SpiceJet",
+      "pss": "Navitaire",
+      "files_atpco_cat33": false,
+      "observed_through": "2026-08-21",
+      "observed_through_basis": "date of the preserved evidence copy actually held"
+    }
+  },
+  "policies": [
+    {
+      "policy_id": "6E-DOM-OBS-20260822",
+      "carrier": "6E",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-08-22",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 3,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 300000,
+            "cap": "BASE_PLUS_FUEL_SURCHARGE"
+          },
+          "from_seconds": 259200,
+          "to_seconds": null
+        },
+        {
+          "from_h": 24,
+          "to_h": 72,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 349900,
+            "cap": "BASE_PLUS_FUEL_SURCHARGE"
+          },
+          "from_seconds": 86400,
+          "to_seconds": 259200
+        },
+        {
+          "from_h": 3,
+          "to_h": 24,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 499900,
+            "cap": "BASE_PLUS_FUEL_SURCHARGE"
+          },
+          "from_seconds": 10800,
+          "to_seconds": 86400
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260822171451/https://www.goindigo.in/cancellation.html",
+        "capture_date": "2026-08-22",
+        "retrieved": "2026-09-05",
+        "quote": "INR 4999 or Base fare + fuel surcharge (Whichever is lower). Cancellation fee will depend upon the time of cancellation. / INR 3499 or Base fare + fuel surcharge (Whichever is lower). / INR 3000 or Base fare + fuel surcharge",
+        "evidence_sha256": "542b2e4583d65db8648e363565bbf3c7cfa234171032adbf155fb6d047413a2d",
+        "evidence_capture_date": "2026-08-22",
+        "content_verification": "PARTIALLY VERIFIED: the figures 3000/3499/4999 are present, but the capture interleaves a day-denominated table ('0-3 Days', '4 Days and above') with an hour-denominated one ('3-24', '24-72 Hours left'), so the band-to-amount mapping cannot be settled from the text alone.",
+        "corroborating_evidence": {
+          "evidence_sha256": "123057e9eb32e1320f5d32cc00e1e24baad338e6a06f027ac9b5171f2bfaa0d6",
+          "url": "https://web.archive.org/web/20250909/https://www.goindigo.in/cancellation.html",
+          "capture_date": "2025-09-09",
+          "note": "Domestic cancellation table is identical to the 2026-08-22 capture, verified 2026-09-08. Intermediate captures (2025-12-06, 2026-01-28, 2026-07-14) carry the same fee set."
+        }
+      },
+      "caveats": [
+        "Page carries NO effective date. Band-to-amount mapping inferred from descending fee order against the 3/24/72h band structure documented on the sibling fees-and-charges page.",
+        "Same capture contains a stale banner ('Full flexibility ... until 7 March 2026', already past at capture date) - a data-quality signal that IndiGo page text lags its live rules.",
+        "Marked disputed 2026-09-08: the capture mixes day-based and hour-based band labels in the same block, so this encoding is one plausible reading rather than a settled one.",
+        "Observed window widened back to 2025-09-09 on 2026-09-08: the domestic cancellation table in the 2025-09-09 capture is identical to this one, and three intermediate captures show the same fees.",
+        "FARE-FAMILY DIMENSION UNRESOLVED: the page prints columns 'Lite Fare | Regular Fare | Flexi Plus Fare | Return Fare', so IndiGo's table is NOT family-agnostic as this rule's '*' encoding assumes. The flattened capture text does not let the column-to-band mapping be settled, which is why the rule stays disputed. Re-transcribing it from the rendered page is an open corpus task."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 10800,
+      "disputed": true,
+      "conflicts_with": [
+        {
+          "policy_id": "6E-DOM-OBS-20250708",
+          "detail": "Two IndiGo pages disagree for the overlapping period: fees-and-charges.html (captured 2025-07-08) gives 3999/3999/4999 for 72h+/24-72h/3-24h, while cancellation.html gives 3000/3499/4999. Neither page states an effective date, so which governs a given ticket is not established."
+        }
+      ],
+      "structurally_unverified": {
+        "reason": "The source prints a fare-family x time-band grid — columns 'Lite Fare | Regular Fare | Flexi Plus Fare | Return Fare', each with its own band label — but this rule encodes the figures as three time bands for all fare families. The flattened capture text cannot settle the column-to-band mapping, and the corpus's own caveat records the mapping as inferred. A number derived from a misread grid is wrong even at LOW confidence, so the rule is withheld from resolution until it is re-transcribed from the rendered page.",
+        "raised": "2026-09-08",
+        "task": "Re-transcribe IndiGo's cancellation grid per fare family from the rendered capture."
+      }
+    },
+    {
+      "policy_id": "6E-DOM-OBS-20250708",
+      "carrier": "6E",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2025-07-08",
+      "observed_to": "2026-08-22",
+      "cutoff_hours_before_departure": 3,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 399900
+          },
+          "from_seconds": 259200,
+          "to_seconds": null
+        },
+        {
+          "from_h": 24,
+          "to_h": 72,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 399900
+          },
+          "from_seconds": 86400,
+          "to_seconds": 259200
+        },
+        {
+          "from_h": 3,
+          "to_h": 24,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 499900
+          },
+          "from_seconds": 10800,
+          "to_seconds": 86400
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20250708081747/https://www.goindigo.in/travel-information/en/fees-and-charges.html",
+        "capture_date": "2025-07-08",
+        "retrieved": "2026-09-05",
+        "quote": "Cancellation fee Change Fee Number of hours left for departure 3-24 (Hours) 24-72 (Hours) 72 Hours and beyond 3-72 (Hours) 72 Hours and beyond INR 4999 3999 3999 2999 2999",
+        "evidence_sha256": "14f076f572165448eb77ca9d83acd19b0d9cbdd89ea248ca2d4704cedb1bd70c",
+        "evidence_capture_date": "2025-07-08",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08. Column alignment is now settled: the header reads '3-24 (Hours) | 24-72 (Hours) | 72 Hours and beyond' against 'INR 4999 3999 3999', so the earlier pixel-alignment doubt is resolved."
+      },
+      "caveats": [
+        "Column alignment verified from the preserved copy's text on 2026-09-08; the rule is no longer disputed."
+      ],
+      "disputed": false,
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 10800
+    },
+    {
+      "policy_id": "6E-DOM-OBS-20230530",
+      "carrier": "6E",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2023-05-30",
+      "observed_to": "2025-07-08",
+      "cutoff_hours_before_departure": 3,
+      "bands": [
+        {
+          "from_h": 96,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 300000
+          },
+          "from_seconds": 345600,
+          "to_seconds": null
+        },
+        {
+          "from_h": 3,
+          "to_h": 96,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 350000
+          },
+          "from_seconds": 10800,
+          "to_seconds": 345600
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20230530083806/https://www.goindigo.in/travel-information/en/fees-and-charges.html",
+        "capture_date": "2023-05-30",
+        "retrieved": "2026-09-05",
+        "quote": "Cancellation fee Change Fee Number days left for departure 0-3 (Days) 4 Days and above 0-3 (Days) 4 Days and above INR 3500 3000 3250 2750",
+        "evidence_sha256": "b2b57af937b2f6c44f82e561b05d34e5ab6ecbb8b07fe303017aa2cd4e43e3ba",
+        "evidence_capture_date": "2023-05-30",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "DAY-based bands, not hour-based: '0-3 Days' and '4 Days and above'. Encoded as 0-96h and 96h+. This is the documented rule-shape drift (2 bands -> 3 bands, Days -> Hours) between 2023 and 2025 on the same URL.",
+        "Band floor raised from 0h to the 3h cut-off in corpus v2026-09-07.2 (the sub-cut-off portion was unreachable). No computed value changes.",
+        "Verified 2026-09-08: the copy prints 'Number days left for departure 0-3 (Days) | 4 Days and above' against 'INR 3500 3000', confirming both the values and the day denomination."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "DAYS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 10800
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "ECONOMY_VALUE",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 0,
+          "to_h": null,
+          "fee": {
+            "kind": "FARE_FULLY_FORFEITED"
+          },
+          "from_seconds": 0,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Economy - Value: Only taxes are refunded (base fare non-refundable at any time)",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "Conditions of Carriage PDF (legally controlling) could not be retrieved - 4 fetch attempts timed out. This FAQ page is secondary to it.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415-CLASSIC",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "ECONOMY_CLASSIC|PREMIUM_ECONOMY_CLASSIC",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 250000
+          },
+          "from_seconds": 259200,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 72,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 350000
+          },
+          "from_seconds": 0,
+          "to_seconds": 259200
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Economy - Classic: >72h INR 2500, <72h INR 3500. Premium Economy - Classic: >72h INR 2500, <72h INR 3500.",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "No effective date on page.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415-ECOFLEX",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "ECONOMY_FLEX",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 0
+          },
+          "from_seconds": 259200,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 72,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 250000
+          },
+          "from_seconds": 0,
+          "to_seconds": 259200
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Economy - Flex: >72h No additional charges, <72h INR 2500",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "No effective date on page.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415-PEFLEX",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "PREMIUM_ECONOMY_FLEX",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 48,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 0
+          },
+          "from_seconds": 172800,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 48,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 250000
+          },
+          "from_seconds": 0,
+          "to_seconds": 172800
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Premium Economy - Flex: >48h No additional charges, <48h INR 2500",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "No effective date on page.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415-JFLEX",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "BUSINESS_FLEX|FIRST",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 24,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 0
+          },
+          "from_seconds": 86400,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 24,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 250000
+          },
+          "from_seconds": 0,
+          "to_seconds": 86400
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Business - Flex: >24h No additional charges, <24h INR 2500. First class: >24h No additional charges, <24h INR 2500.",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "No effective date on page.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "AI-ANY-OBS-20260415-JCLASSIC",
+      "carrier": "AI",
+      "market": "*",
+      "fare_family": "BUSINESS_CLASSIC",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-04-15",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 0,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 350000
+          },
+          "from_seconds": 0,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20260415223612/https://www.airindia.com/in/en/frequently-asked-questions/payment-refund-cancellations.html",
+        "capture_date": "2026-04-15",
+        "retrieved": "2026-09-05",
+        "quote": "Business - Classic is stated as a flat INR 3500 with no time-band distinction in this table.",
+        "evidence_sha256": "6a2aa654a31c7bee7341f45551d1561df91cfbe2835f7c94d5253097b0f12e9f",
+        "evidence_capture_date": "2026-04-15",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "Flat fee, no time dependence - T-120h and T-3h yield the same result.",
+        "Verified 2026-09-08 against the preserved copy. Note the source answers the question 'what are the penalty charges if I cancel my ticket?' but words every row as 'Modification is done ... before departure'. The cancellation reading is the one the question asks for; the Conditions of Carriage PDF remains the controlling document and is still unretrieved."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "IX-DOM-OBS-20260905-VALBIZ",
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "fare_family": "VALUE|BUSINESS",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 2,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 430000
+          },
+          "from_seconds": 7200,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://www.airindiaexpress.com/content/dam/airindiaexpress/documents/mandatory-disclosure/fees-and-charges.pdf",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Value / Business: Change fee (up to 2 hrs prior) INR 3000; Cancellation fee (up to 2 hrs prior) INR 4300",
+        "evidence_sha256": "d0363ea56741dd385e3c4730e57067945ef8f7b7f2c95135f9727606358b044f",
+        "evidence_capture_date": "2026-09-05",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08. The PDF text layer was extracted with pypdf; the earlier 'no readable text layer' note was an environment limitation, not a property of the document."
+      },
+      "caveats": [
+        "Flat fee, no time dependence. Fetched directly from the official mandatory-disclosure PDF - the cleanest primary source obtained across all five carriers.",
+        "NO revision date printed anywhere in the document.",
+        "Verified 2026-09-08: the domestic table prints Value/Business 4300 and Lite 'Taxes Refundable Only'; the Classic (2000 up to 3 days / 3000 within 3 days to 2 hrs) and Flex (1500 up to 2 hrs) rows come from the domestic Classic/Flex block of the same PDF, not from the separate multi-currency international table."
+      ],
+      "rule_source_class": "CARRIER_MANDATORY_DISCLOSURE",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200
+    },
+    {
+      "policy_id": "IX-DOM-OBS-20260905-LITE",
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "fare_family": "LITE",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 2,
+          "to_h": null,
+          "fee": {
+            "kind": "FARE_FULLY_FORFEITED"
+          },
+          "from_seconds": 7200,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://www.airindiaexpress.com/content/dam/airindiaexpress/documents/mandatory-disclosure/fees-and-charges.pdf",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Lite: Change fee INR 3000; Cancellation fee - Taxes refundable only",
+        "evidence_sha256": "d0363ea56741dd385e3c4730e57067945ef8f7b7f2c95135f9727606358b044f",
+        "evidence_capture_date": "2026-09-05",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08. The PDF text layer was extracted with pypdf; the earlier 'no readable text layer' note was an environment limitation, not a property of the document."
+      },
+      "caveats": [
+        "No revision date printed.",
+        "Verified 2026-09-08: the domestic table prints Value/Business 4300 and Lite 'Taxes Refundable Only'; the Classic (2000 up to 3 days / 3000 within 3 days to 2 hrs) and Flex (1500 up to 2 hrs) rows come from the domestic Classic/Flex block of the same PDF, not from the separate multi-currency international table."
+      ],
+      "rule_source_class": "CARRIER_MANDATORY_DISCLOSURE",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200
+    },
+    {
+      "policy_id": "IX-DOM-OBS-20260905-CLASSIC",
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "fare_family": "CLASSIC",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 200000
+          },
+          "from_seconds": 259200,
+          "to_seconds": null
+        },
+        {
+          "from_h": 2,
+          "to_h": 72,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 300000
+          },
+          "from_seconds": 7200,
+          "to_seconds": 259200
+        }
+      ],
+      "source": {
+        "url": "https://www.airindiaexpress.com/content/dam/airindiaexpress/documents/mandatory-disclosure/fees-and-charges.pdf",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Classic: Up to 3 days of departure - Change fee INR 300, Cancellation fee INR 2000. Within 3 days to 2 hrs of departure - Change fee INR 1000, Cancellation fee INR 3000.",
+        "evidence_sha256": "d0363ea56741dd385e3c4730e57067945ef8f7b7f2c95135f9727606358b044f",
+        "evidence_capture_date": "2026-09-05",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08. The PDF text layer was extracted with pypdf; the earlier 'no readable text layer' note was an environment limitation, not a property of the document."
+      },
+      "caveats": [
+        "'3 days' encoded as 72h. No revision date printed.",
+        "Verified 2026-09-08: the domestic table prints Value/Business 4300 and Lite 'Taxes Refundable Only'; the Classic (2000 up to 3 days / 3000 within 3 days to 2 hrs) and Flex (1500 up to 2 hrs) rows come from the domestic Classic/Flex block of the same PDF, not from the separate multi-currency international table."
+      ],
+      "rule_source_class": "CARRIER_MANDATORY_DISCLOSURE",
+      "band_unit": "DAYS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200
+    },
+    {
+      "policy_id": "IX-DOM-OBS-20260905-FLEX",
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "fare_family": "FLEX",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 2,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 150000
+          },
+          "from_seconds": 7200,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://www.airindiaexpress.com/content/dam/airindiaexpress/documents/mandatory-disclosure/fees-and-charges.pdf",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Flex: Up to 2 hrs of departure - Cancellation fee INR 1500",
+        "evidence_sha256": "d0363ea56741dd385e3c4730e57067945ef8f7b7f2c95135f9727606358b044f",
+        "evidence_capture_date": "2026-09-05",
+        "content_verification": "VERIFIED: every fee figure and band boundary asserted by this rule was read back from the preserved copy on 2026-09-08. The PDF text layer was extracted with pypdf; the earlier 'no readable text layer' note was an environment limitation, not a property of the document."
+      },
+      "caveats": [
+        "Single flat cancellation band despite banded change fees. No revision date printed.",
+        "Verified 2026-09-08: the domestic table prints Value/Business 4300 and Lite 'Taxes Refundable Only'; the Classic (2000 up to 3 days / 3000 within 3 days to 2 hrs) and Flex (1500 up to 2 hrs) rows come from the domestic Classic/Flex block of the same PDF, not from the separate multi-currency international table."
+      ],
+      "rule_source_class": "CARRIER_MANDATORY_DISCLOSURE",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200
+    },
+    {
+      "policy_id": "QP-DOM-STATED-20260512",
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "fare_family": "SAVER",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "STATED",
+      "applicability_key": "BOOKING_DATE",
+      "stated_effective_from": "2025-08-20",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "from_seconds": 259200,
+          "to_seconds": null,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 399900,
+            "cap": "AIRFARE_100PCT"
+          }
+        },
+        {
+          "from_h": 24,
+          "to_h": 72,
+          "from_seconds": 86400,
+          "to_seconds": 259200,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 399900,
+            "cap": "AIRFARE_100PCT"
+          }
+        },
+        {
+          "from_h": 2,
+          "to_h": 24,
+          "from_seconds": 7200,
+          "to_seconds": 86400,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 499900,
+            "cap": "AIRFARE_100PCT"
+          }
+        }
+      ],
+      "source": {
+        "url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Cancellation Fees: Domestic: 0-24 (Hours) - INR 4999 or 100% of the airfare charge (whichever is lower) 24-72 (Hours) - INR 3999 or 100% of the airfare charge (whichever is lower) 72 Hours + - INR 3999 or 100% of the airfare charge (whichever is lower). 100% of airfare will be forfieted for any changes or cancellations made within two (2) hours prior to the scheduled time of flight departure. No-Show Penalty: 100% of the airfare will be forfieted. [Terms] effective for bookings made from 20th August 2025 onwards.",
+        "evidence_sha256": "e594e055ae1e142063180ccf82365228b215c0f601473580db08815c9c5f1cf8",
+        "evidence_capture_date": "2026-04-18",
+        "content_verification": "VERIFIED: bands, cut-off, cap wording and the carrier-stated effective date were all read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+        "Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+        "The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200,
+      "disputed": false
+    },
+    {
+      "policy_id": "QP-DOM-STATED-20260512-FLEXI",
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "fare_family": "FLEXI",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "STATED",
+      "applicability_key": "BOOKING_DATE",
+      "stated_effective_from": "2025-08-20",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "cutoff_hours_before_departure": 2,
+      "bands": [
+        {
+          "from_h": 72,
+          "to_h": null,
+          "from_seconds": 259200,
+          "to_seconds": null,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 249900,
+            "cap": "AIRFARE_100PCT"
+          }
+        },
+        {
+          "from_h": 24,
+          "to_h": 72,
+          "from_seconds": 86400,
+          "to_seconds": 259200,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 249900,
+            "cap": "AIRFARE_100PCT"
+          }
+        },
+        {
+          "from_h": 2,
+          "to_h": 24,
+          "from_seconds": 7200,
+          "to_seconds": 86400,
+          "fee": {
+            "kind": "LESSER_OF",
+            "amount_minor": 349900,
+            "cap": "AIRFARE_100PCT"
+          }
+        }
+      ],
+      "source": {
+        "url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "Cancellation Fees: Domestic: 0-24 (Hours) - INR 3499 or 100% of the airfare charge (whichever is lower) 24-72 (Hours) - INR 2499 or 100% of the airfare charge (whichever is lower) 72 Hours + - INR 2499 or 100% of the airfare charge (whichever is lower). 100% of airfare will be forfieted for any changes or cancellations made within two (2) hours prior to the scheduled time of flight departure. No-Show Penalty: 100% of the airfare will be forfieted. [Terms] effective for bookings made from 20th August 2025 onwards.",
+        "evidence_sha256": "e594e055ae1e142063180ccf82365228b215c0f601473580db08815c9c5f1cf8",
+        "evidence_capture_date": "2026-04-18",
+        "content_verification": "VERIFIED: bands, cut-off, cap wording and the carrier-stated effective date were all read back from the preserved copy on 2026-09-08."
+      },
+      "caveats": [
+        "Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+        "Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+        "The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "cutoff_seconds_before_departure": 7200,
+      "disputed": false
+    },
+    {
+      "policy_id": "QP-DOM-OBS-20230401",
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "OBSERVED",
+      "applicability_key": "UNKNOWN",
+      "observed_from": "2023-04-01",
+      "observed_to": "2025-08-20",
+      "bands": [
+        {
+          "from_h": 0,
+          "to_h": null,
+          "fee": {
+            "kind": "UNKNOWN"
+          },
+          "from_seconds": 0,
+          "to_seconds": null
+        }
+      ],
+      "source": {
+        "url": "https://web.archive.org/web/20230401165858/https://www.akasaair.com/quick-links/cancellation-policy",
+        "capture_date": "2023-04-01",
+        "retrieved": "2026-09-05",
+        "quote": "2023-04-01 capture renders a full, differently-structured (day-based, no effective date) fee table",
+        "evidence_sha256": "7d719f02df8bc3c6b8cd3947837980f35795965c2ce69df37cf44dc0bc54e24d",
+        "evidence_capture_date": "2023-04-01",
+        "content_verification": "NOT_APPLICABLE: rule asserts no numeric fee (forfeiture or uncaptured band)."
+      },
+      "caveats": [
+        "PLACEHOLDER WITH KNOWN STRUCTURE BUT UNCAPTURED AMOUNTS. The capture is confirmed legible and day-based, but the specific INR figures were not transcribed in this pass. Engine ABSTAINS on any ticket resolving here. Backfilling this rule is a named work item."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_OBSERVED",
+      "band_unit": "DAYS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      }
+    },
+    {
+      "policy_id": "SG-DOM-STATED-20251212",
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "STATED",
+      "applicability_key": "BOOKING_DATE",
+      "stated_effective_from": "2025-12-12",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 96,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 389900
+          },
+          "from_seconds": 345600,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 96,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 489900
+          },
+          "from_seconds": 0,
+          "to_seconds": 345600
+        }
+      ],
+      "non_refundable_fees": [
+        {
+          "code": "CONVENIENCE_ONLINE",
+          "amount_minor": 25000,
+          "note": "INR 250 online"
+        },
+        {
+          "code": "CONVENIENCE_AIRPORT",
+          "amount_minor": 35000,
+          "note": "INR 350 airport / reservations"
+        }
+      ],
+      "source": {
+        "url": "https://corporate.spicejet.com/Tnc.aspx",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "'4275' before Dec 12, 2025 vs '4899' on/after. At T-120h (>96h tier): INR 3899 for bookings on/after 12-Dec-2025. A non-refundable convenience fee will be levied on all transactions - INR 250 online, INR 350 airport/reservations.",
+        "evidence_sha256": "237bda456b628f07559c005eb08b1a2ffbd4cf324b8dd2e1ba0f68315d3eae71",
+        "evidence_capture_date": "2026-08-21",
+        "content_verification": "VERIFIED: every fee figure asserted by this rule is present in the preserved copy."
+      },
+      "caveats": [
+        "BEST EVIDENCE OF ANY CARRIER: SpiceJet's own live page retains both the old and new fee values with explicit booking-date boundaries.",
+        "The >96h figure (3899) and the <96h figure (4899) come from two different statements on the same page; their band assignment is the most plausible reading but was not cross-verified against a single table.",
+        "Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "free_look": {
+        "within_hours_of_booking": 24,
+        "min_seconds_to_departure": 604800,
+        "fee": {
+          "kind": "FIXED",
+          "amount_minor": 0
+        },
+        "requires_booking_instant": true,
+        "quote": "A. Cancellation made within 24 hours of the booking will be considered provided the flight departure date of the first leg of travel is beyond seven days from the day of the cancellation. NIL* ... *NIL: To utilise this facility passengers must contact SpiceJet's reservation centre.",
+        "condition_note": "The carrier states this nil-fee facility is available only by contacting its reservation centre; a self-service cancellation may not attract it."
+      }
+    },
+    {
+      "policy_id": "SG-DOM-STATED-20250228",
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "fare_family": "*",
+      "provenance": "POLICY_SNAPSHOT",
+      "date_basis": "STATED",
+      "applicability_key": "BOOKING_DATE",
+      "stated_effective_from": "2025-02-28",
+      "stated_effective_to": "2025-12-12",
+      "observed_from": "2026-09-05",
+      "observed_to": null,
+      "bands": [
+        {
+          "from_h": 96,
+          "to_h": null,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 320000
+          },
+          "from_seconds": 345600,
+          "to_seconds": null
+        },
+        {
+          "from_h": 0,
+          "to_h": 96,
+          "fee": {
+            "kind": "FIXED",
+            "amount_minor": 427500
+          },
+          "from_seconds": 0,
+          "to_seconds": 345600
+        }
+      ],
+      "non_refundable_fees": [
+        {
+          "code": "CONVENIENCE_ONLINE",
+          "amount_minor": 25000,
+          "note": "INR 250 online"
+        }
+      ],
+      "source": {
+        "url": "https://corporate.spicejet.com/Tnc.aspx",
+        "capture_date": "2026-09-05",
+        "retrieved": "2026-09-05",
+        "quote": "'2950 + Fare Difference' before Feb 28, 2025 vs '2999 + Fare Difference' on/after; '4275' before Dec 12, 2025 vs '4899' on/after. INR 3200 at T-120h for bookings before 12-Dec-2025.",
+        "evidence_sha256": "237bda456b628f07559c005eb08b1a2ffbd4cf324b8dd2e1ba0f68315d3eae71",
+        "evidence_capture_date": "2026-08-21",
+        "content_verification": "VERIFIED: every fee figure asserted by this rule is present in the preserved copy."
+      },
+      "caveats": [
+        "The 2950/2999 pair is the CHANGE fee, not cancellation - not encoded here.",
+        "This is the single most valuable test fixture in the corpus: a SpiceJet ticket booked 2025-02-27 vs 2025-03-01, both cancelled at T-120h, must yield different fees.",
+        "Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+      ],
+      "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+      "band_unit": "HOURS",
+      "day_boundary": null,
+      "supports_post_departure": false,
+      "requires_booking_instant": false,
+      "applies_to": {
+        "passenger_initiated": true,
+        "carrier_disruption": false,
+        "unused_only": true,
+        "single_sector": true
+      },
+      "free_look": {
+        "within_hours_of_booking": 24,
+        "min_seconds_to_departure": 604800,
+        "fee": {
+          "kind": "FIXED",
+          "amount_minor": 0
+        },
+        "requires_booking_instant": true,
+        "quote": "A. Cancellation made within 24 hours of the booking will be considered provided the flight departure date of the first leg of travel is beyond seven days from the day of the cancellation. NIL* ... *NIL: To utilise this facility passengers must contact SpiceJet's reservation centre.",
+        "condition_note": "The carrier states this nil-fee facility is available only by contacting its reservation centre; a self-service cancellation may not attract it."
+      }
+    }
+  ],
+  "max_projection_days": 30
+}

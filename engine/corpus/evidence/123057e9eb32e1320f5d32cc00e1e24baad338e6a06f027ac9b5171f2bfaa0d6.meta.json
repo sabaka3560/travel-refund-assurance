@@ -1,0 +1,12 @@
+{
+  "sha256": "123057e9eb32e1320f5d32cc00e1e24baad338e6a06f027ac9b5171f2bfaa0d6",
+  "bytes": 278970,
+  "content_type": "text/html",
+  "source_url": "https://web.archive.org/web/20250909/https://www.goindigo.in/cancellation.html",
+  "capture_kind": "WAYBACK",
+  "fetched_at": "2026-09-08T16:22:19.893115+05:30",
+  "http_status": 200,
+  "carrier_capture_date": "2025-09-09",
+  "redistribution_restricted": true,
+  "notes": "Corroborating IndiGo capture: its domestic cancellation table is identical to the 2026-08-22 capture."
+}

@@ -1,0 +1,12 @@
+{
+  "sha256": "cd89fce3007b8c8351d2b593edf1154c334228ab5ace4f43a09bdba1f0446f08",
+  "bytes": 211228,
+  "content_type": "image/png",
+  "source_url": "client_upload:02_indigo_DEL-BLR.png",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:46:30.946844+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 02_indigo_DEL-BLR.png"
+}

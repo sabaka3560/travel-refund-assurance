@@ -1,0 +1,12 @@
+{
+  "sha256": "d4e7ea6d5be030ea736f7d7f8aefb43ad67ce7f319d5f6dfa9609aae743bf82a",
+  "bytes": 900209,
+  "content_type": "image/jpeg",
+  "source_url": "client_upload:real_airindia_flight_ticket.jpg",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:47:29.663785+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: real_airindia_flight_ticket.jpg"
+}

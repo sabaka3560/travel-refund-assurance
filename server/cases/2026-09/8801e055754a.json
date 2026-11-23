@@ -1,0 +1,124 @@
+{
+  "case_id": "8801e055754a",
+  "created_at": "2026-09-08T16:28:04.367446+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.4",
+  "request_canonical_sha256": "baf7b97253b1972884abe934c016ad0f8037d09a1ccd95a62688c99bf8aca491",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "booking_date": "2025-11-20",
+      "departure_local": "2026-01-15T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "base_fare": "6700.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.00"
+        }
+      ]
+    },
+    "cancellation": {
+      "instant_local": "2026-01-15T21:00:00",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "response": {
+    "case_id": "8801e055754a",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.4",
+    "cancellation": {
+      "instant": "2026-01-15T21:00:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "AT_OR_AFTER_DEPARTURE",
+      "seconds_to_departure": -10800,
+      "hours_to_departure": "-3.00",
+      "days_to_departure_display": "-1"
+    },
+    "total": {
+      "amount": "₹352.00",
+      "minor": 35200,
+      "status": "PARTIAL",
+      "excludes": [
+        "Base fare (post-departure / no-show provision not recorded)"
+      ]
+    },
+    "confidence": "LOW",
+    "review_status": "NOT_REQUIRED",
+    "lines": [
+      {
+        "label": "Tax K3 (GST on air transport)",
+        "original": "₹352.00",
+        "original_minor": 35200,
+        "contribution": "₹352.00",
+        "contribution_minor": 35200,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Base fare",
+        "original": "₹6,700.00",
+        "original_minor": 670000,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "INSUFFICIENT",
+        "classification_confidence": null,
+        "basis": "Cancellation at or after departure. No no-show provision is recorded for this rule, so the advance-cancellation table is not applied.",
+        "source_url": "https://corporate.spicejet.com/Tnc.aspx",
+        "evidence": null
+      }
+    ],
+    "assumptions": [],
+    "unresolved": [
+      "Fare component: Cancellation at or after departure. No no-show provision is recorded for this rule, so the advance-cancellation table is not applied."
+    ],
+    "conflicts": [],
+    "rules_rejected": [
+      {
+        "policy_id": "6E-DOM-OBS-20260822",
+        "reason_code": "QUARANTINED",
+        "detail": "Rule quarantined: Structurally unverified: The source prints a fare-family x time-band grid — columns 'Lite Fare | Regular Fare | Flexi Plus Fare | Return Fare', each with its own band label — but this rule encodes the figures as three time bands for all fare families. The flattened capture text cannot settle the column-to-band mapping, and the corpus's own caveat records the mapping as inferred. A number derived from a misread grid is wrong even at LOW confidence, so the rule is withheld from resolution until it is re-transcribed from the rendered page."
+      },
+      {
+        "policy_id": "SG-DOM-STATED-20251212",
+        "reason_code": "TEMPORAL",
+        "detail": "SG-DOM-STATED-20251212: temporally invalid (key date 2025-11-20 precedes stated effective date 2025-12-12)"
+      }
+    ],
+    "comparison": null,
+    "cancel_instant": "2026-01-15T21:00:00+05:30",
+    "hours_before": -3.0,
+    "refund_total": "₹352.00",
+    "refund_total_minor": 35200,
+    "abstained": [
+      "Fare component: Cancellation at or after departure. No no-show provision is recorded for this rule, so the advance-cancellation table is not applied."
+    ],
+    "warnings": [],
+    "rule_id": "SG-DOM-STATED-20250228",
+    "rule_source": "https://corporate.spicejet.com/Tnc.aspx"
+  }
+}

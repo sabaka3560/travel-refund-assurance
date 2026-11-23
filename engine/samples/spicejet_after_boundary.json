@@ -1,0 +1,21 @@
+{
+  "ticket_number": "775-1234567891",
+  "carrier": "SG",
+  "market": "DOMESTIC",
+  "origin": "DEL",
+  "destination": "BOM",
+  "booking_date": "2025-12-20",
+  "ticket_issue_date": "2025-12-20",
+  "scheduled_departure": "2026-01-15T18:00:00",
+  "departure_timezone": "Asia/Kolkata",
+  "fare_family": "SAVER",
+  "base_fare": "6700.00",
+  "taxes": [
+    {"code": "K3", "amount": "352.00"},
+    {"code": "UDF", "amount": "708.00"},
+    {"code": "PSF", "amount": "160.00"}
+  ],
+  "carrier_surcharges": [{"code": "YR", "amount": "250.00"}],
+  "seller_fees": [{"code": "CONVENIENCE_ONLINE", "amount": "250.00"}],
+  "total_paid": "8420.00"
+}

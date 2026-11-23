@@ -1,0 +1,136 @@
+{
+  "case_id": "af4d1959fc7c",
+  "created_at": "2026-09-07T22:54:28.900049+05:30",
+  "engine_version": "2.0.0",
+  "semantics_version": "2026-09-07.1",
+  "corpus_version": "2026-09-05.1",
+  "request_canonical_sha256": "5d983b701ff4475a4ec52e7c7c2fc5f46c14253ef46612d7a4d4ef321ac0a597",
+  "request": {
+    "ticket": {
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "origin": "BLR",
+      "destination": "BOM",
+      "booking_date": "2026-06-10",
+      "departure_local": "2026-09-25T14:40:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "4800.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "240.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "560.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "5600.00",
+      "fare_family": "FLEXI"
+    },
+    "cancellation": {
+      "instant_local": "2026-09-20T14:40:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "af4d1959fc7c",
+    "engine_version": "2.0.0",
+    "semantics_version": "2026-09-07.1",
+    "corpus_version": "2026-09-05.1",
+    "cancellation": {
+      "instant": "2026-09-20T14:40:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": "₹3,101.00",
+      "minor": 310100,
+      "status": "COMPLETE",
+      "excludes": []
+    },
+    "confidence": "MEDIUM",
+    "review_status": "NOT_REQUIRED",
+    "lines": [
+      {
+        "label": "Tax K3 (GST on air transport)",
+        "original": "₹240.00",
+        "original_minor": 24000,
+        "contribution": "₹240.00",
+        "contribution_minor": 24000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": null
+      },
+      {
+        "label": "Tax UDF (User Development Fee)",
+        "original": "₹560.00",
+        "original_minor": 56000,
+        "contribution": "₹560.00",
+        "contribution_minor": 56000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": null
+      },
+      {
+        "label": "Base fare",
+        "original": "₹4,800.00",
+        "original_minor": 480000,
+        "contribution": "₹2,301.00",
+        "contribution_minor": 230100,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "QP-DOM-STATED-20260512-FLEXI: band T-72h+, penalty ₹2,499.00.",
+        "source_url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "evidence": null
+      },
+      {
+        "label": "Cancellation penalty",
+        "original": null,
+        "original_minor": null,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "₹2,499.00 — shown for transparency; already deducted from the base-fare line above and deliberately NOT subtracted a second time.",
+        "source_url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "evidence": null
+      }
+    ],
+    "assumptions": [],
+    "unresolved": [],
+    "conflicts": [],
+    "rules_rejected": [
+      "QP-DOM-STATED-20260512: QP-DOM-STATED-20260512: fare family FLEXI not in ['SAVER']",
+      "QP-DOM-OBS-20230401: QP-DOM-OBS-20230401: temporally invalid (key date 2026-09-20 is on or after next capture date 2026-05-12)"
+    ],
+    "comparison": null,
+    "cancel_instant": "2026-09-20T14:40:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": "₹3,101.00",
+    "refund_total_minor": 310100,
+    "abstained": [],
+    "warnings": [
+      "QP-DOM-STATED-20260512-FLEXI: 4-72h band amount not captured - engine abstains on that band."
+    ],
+    "rule_id": "QP-DOM-STATED-20260512-FLEXI",
+    "rule_source": "https://www.akasaair.com/quick-links/cancellation-policy"
+  }
+}

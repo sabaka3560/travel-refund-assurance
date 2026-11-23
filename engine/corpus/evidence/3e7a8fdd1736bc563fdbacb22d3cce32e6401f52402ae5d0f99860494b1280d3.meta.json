@@ -1,0 +1,12 @@
+{
+  "sha256": "3e7a8fdd1736bc563fdbacb22d3cce32e6401f52402ae5d0f99860494b1280d3",
+  "bytes": 785663,
+  "content_type": "image/jpeg",
+  "source_url": "client_upload:real_akasa_flight_ticket.jpg",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-11T09:56:39.814028+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: real_akasa_flight_ticket.jpg"
+}

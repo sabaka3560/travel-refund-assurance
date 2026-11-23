@@ -1,0 +1,32 @@
+{
+  "case_id": "ix",
+  "label": "AI Express Classic — single undated capture, fare line abstains",
+  "rule_id": null,
+  "refund_minor": 73000,
+  "refund_formatted": "₹730.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 17000,
+      "contribution_formatted": "₹170.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 56000,
+      "contribution_formatted": "₹560.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    }
+  ],
+  "abstained": [
+    "Fare component: No rule covers this ticket under either the booking date or the cancellation date. The evidence held for this carrier does not reach these dates."
+  ],
+  "warnings": []
+}

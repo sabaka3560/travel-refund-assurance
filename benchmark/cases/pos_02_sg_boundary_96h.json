@@ -1,0 +1,59 @@
+{
+  "id": "pos_02_sg_boundary_96h",
+  "set": "positive",
+  "description": "SpiceJet boundary inclusive lower edge at T-96h",
+  "provenance": "synthetic",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BOM",
+      "booking_date": "2025-11-20",
+      "departure_local": "2026-01-15T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "6700.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.00"
+        },
+        {
+          "code": "PSF",
+          "amount": "160.00"
+        }
+      ],
+      "carrier_surcharges": [
+        {
+          "code": "YR",
+          "amount": "250.00"
+        }
+      ],
+      "seller_fees": [
+        {
+          "code": "CONVENIENCE_ONLINE",
+          "amount": "250.00"
+        }
+      ],
+      "total_paid": "8420.00",
+      "fare_family": "SAVER"
+    },
+    "cancellation": {
+      "instant_local": "2026-01-11T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "expected": {
+    "total_minor": 472000,
+    "total_status": "PARTIAL",
+    "confidence": "LOW"
+  },
+  "expectation_source": "Derived from the corpus and this engine's own semantics. NOT a client-supplied or carrier-supplied reference answer."
+}

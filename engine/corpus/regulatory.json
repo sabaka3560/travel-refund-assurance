@@ -1,0 +1,83 @@
+{
+  "corpus_version": "2026-09-05.1",
+  "jurisdiction": "IN",
+  "_README": [
+    "The statutory layer sits ABOVE the carrier policy layer and overrides it.",
+    "This is the only layer that can reach HIGH confidence for Navitaire LCC carriers,",
+    "because the DGCA obligation attaches to the operating permit, not to the",
+    "distribution system or to whether the carrier files ATPCO fare rules."
+  ],
+
+  "instruments": [
+    {
+      "instrument_id": "DGCA-CAR-S3-M-II",
+      "title": "Civil Aviation Requirements, Section 3 - Air Transport, Series M, Part II - Refund of Airfare",
+      "issue": "Issue I",
+      "issue_date": "2008-05-22",
+      "authority": "Rule 133A of the Aircraft Rules, 1937",
+      "applies_to": "air transport undertakings including scheduled and non-scheduled operators",
+      "effective_from": "2008-05-22",
+      "effective_to": null,
+      "technology_neutral": true,
+      "technology_neutral_note": "No clause references ATPCO, GDS, PSS or fare filing. The obligation attaches to the operating permit. This is why the statutory floor binds IndiGo and Akasa exactly as it binds Air India.",
+      "source": {
+        "url": "https://web.archive.org/web/*/dgca.gov.in/*CAR*Section3*SeriesM*",
+        "note": "dgca.gov.in live flat-file CAR URLs now return 404; recovered via Internet Archive. Self-host the PDF with capture provenance rather than fetching live.",
+        "retrieved": "2026-09-05"
+      },
+      "provisions": [
+        {
+          "provision_id": "STATUTORY_TAX_REFUND",
+          "rule": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "covers_codes": ["UDF", "ADF", "PSF", "GST_K3"],
+          "overrides_fare_rule": true,
+          "confidence": "HIGH",
+          "carrier_corroboration": {
+            "SG": "In the event of cancellation, non-utilization, or no-show on promo or special fares where the basic fare is non-refundable, passengers will be entitled to a refund of statutory taxes, including the User Development Fee (UDF), Airport Development Fee (ADF), and Passenger Service Fee (PSF). -- https://corporate.spicejet.com/Tnc.aspx (retrieved 2026-09-05)",
+            "AI": "Economy - Value: Only taxes are refunded -- Air India FAQ, capture 2026-04-15",
+            "IX": "Lite: Taxes Refundable Only -- mandatory-disclosure PDF, retrieved 2026-09-05"
+          }
+        },
+        {
+          "provision_id": "CANCELLATION_FEE_CAP",
+          "rule": "The airline shall not levy a cancellation charge greater than the basic fare plus fuel surcharge, excluding separately disclosed travel-agent charges.",
+          "confidence": "UNVERIFIED",
+          "status": "LOCATED_BUT_UNVERIFIED",
+          "why_unverified": "This provision is widely cited and is carried in the MoCA Passenger Charter, which is a graphics-only PDF with no extractable text layer. No text-layer primary source was obtained. DO NOT build entitlement logic that depends on this without confirming it.",
+          "carrier_corroboration": {
+            "6E": "INR 4999 or Base fare + fuel surcharge (Whichever is lower) -- IndiGo bakes the cap directly into every published fee line, which is strong indirect corroboration that the cap is real and binding.",
+            "IX": "Value/Business international 24h-2h: '100% Base Fare + Fuel Surcharge' -- consistent with the cap being the ceiling."
+          },
+          "engine_behaviour": "Applied as a cap ONLY where the carrier itself publishes it (IndiGo LESSER_OF). Never applied as a general statutory cap, because it is unverified."
+        }
+      ]
+    }
+  ],
+
+  "tax_codes": [
+    {"code": "YQ", "name": "Carrier-imposed surcharge",       "statutory": false, "refundable_by_statute": false, "note": "CARRIER charge, NOT a tax. Refundability follows the fare rule, not the CAR. Most commonly mis-classified field in the whole problem."},
+    {"code": "YR", "name": "Carrier-imposed surcharge",       "statutory": false, "refundable_by_statute": false, "note": "As YQ."},
+    {"code": "K3", "name": "GST on air transport",            "statutory": true,  "refundable_by_statute": true,  "note": "Reverses with the fare. See CBIC Circular 178/10/2022-GST for the cancellation-charge treatment."},
+    {"code": "UDF","name": "User Development Fee",            "statutory": true,  "refundable_by_statute": true,  "note": "Named explicitly in the DGCA statutory carve-out and in SpiceJet's own terms."},
+    {"code": "ADF","name": "Airport Development Fee",         "statutory": true,  "refundable_by_statute": true,  "note": "Named explicitly in the DGCA statutory carve-out."},
+    {"code": "PSF","name": "Passenger Service Fee",           "statutory": true,  "refundable_by_statute": true,  "note": "Named explicitly in the DGCA statutory carve-out."},
+    {"code": "IN", "name": "India domestic levy",             "statutory": true,  "refundable_by_statute": true,  "note": "Treated as statutory. Exact current mapping UNVERIFIED - flagged for diligence."},
+    {"code": "WO", "name": "User Development Fee (alt code)",  "statutory": true,  "refundable_by_statute": true,  "note": "Alternate UDF coding seen on some issuers. UNVERIFIED mapping."}
+  ],
+
+  "gst": {
+    "governing_circular": "CBIC Circular 178/10/2022-GST",
+    "circular_date": "2022-08-03",
+    "treatment": "A cancellation charge on air travel is taxed as part of the PRINCIPAL SUPPLY of transport, at the same rate as the travel class - NOT as a separate 'tolerating an act' supply.",
+    "why_it_matters": "The amount an enterprise actually recovers differs from the airline's refund figure because of ITC treatment on the cancellation charge and the credit note.",
+    "confidence": "HIGH",
+    "retrieved": "2026-09-05"
+  },
+
+  "known_gaps": [
+    "CAR revision history could not be reconstructed - only Issue I (2008-05-22) confirmed. A ticket from any year is currently evaluated against the same version, which is a real limitation if the CAR was amended.",
+    "Bharatiya Vayuyan Adhiniyam 2024 and its rules: impact on refund obligations NOT assessed.",
+    "AERA tariff orders affecting UDF quantum over time: NOT collected.",
+    "Exact current mapping of IN / P2 / RN tax codes: UNVERIFIED."
+  ]
+}

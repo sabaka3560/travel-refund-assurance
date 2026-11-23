@@ -1,0 +1,12 @@
+{
+  "sha256": "1397216a8a338484152466d227d677358f642c649d03a25efbb9b0ef6b54018e",
+  "bytes": 245271,
+  "content_type": "image/png",
+  "source_url": "client_upload:07_spicejet_CORPORATE.png",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:47:00.903284+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 07_spicejet_CORPORATE.png"
+}

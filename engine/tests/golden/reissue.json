@@ -1,0 +1,13 @@
+{
+  "case_id": "reissue",
+  "label": "Reissued ticket — must refuse",
+  "rule_id": null,
+  "refund_minor": null,
+  "refund_formatted": null,
+  "confidence": "INSUFFICIENT",
+  "lines": [],
+  "abstained": [
+    "Ticket was reissued. The exchange chain is required and is out of scope."
+  ],
+  "warnings": []
+}

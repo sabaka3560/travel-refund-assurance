@@ -1,0 +1,38 @@
+{
+  "case_id": "ai-flex",
+  "label": "Air India Flex — evidence horizon reached, fare line abstains",
+  "rule_id": null,
+  "refund_minor": 131300,
+  "refund_formatted": "₹1,313.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 44500,
+      "contribution_formatted": "₹445.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 70800,
+      "contribution_formatted": "₹708.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax PSF (Passenger Service Fee)",
+      "contribution_minor": 16000,
+      "contribution_formatted": "₹160.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    }
+  ],
+  "abstained": [
+    "Fare component: No rule covers this ticket under either the booking date or the cancellation date. The evidence held for this carrier does not reach these dates."
+  ],
+  "warnings": []
+}

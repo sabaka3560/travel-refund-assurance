@@ -1,0 +1,12 @@
+{
+  "sha256": "d0363ea56741dd385e3c4730e57067945ef8f7b7f2c95135f9727606358b044f",
+  "bytes": 332364,
+  "content_type": "application/pdf",
+  "source_url": "https://www.airindiaexpress.com/content/dam/airindiaexpress/documents/mandatory-disclosure/fees-and-charges.pdf",
+  "capture_kind": "OFFICIAL_PDF",
+  "fetched_at": "2026-09-07T23:06:44.477272+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Archived capture cited by the corpus."
+}

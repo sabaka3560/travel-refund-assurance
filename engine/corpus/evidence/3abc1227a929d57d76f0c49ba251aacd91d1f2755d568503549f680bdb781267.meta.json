@@ -1,0 +1,12 @@
+{
+  "sha256": "3abc1227a929d57d76f0c49ba251aacd91d1f2755d568503549f680bdb781267",
+  "bytes": 210771,
+  "content_type": "image/png",
+  "source_url": "client_upload:06_makemytrip_invoice_LUMPED_TAX.png",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:46:54.968853+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 06_makemytrip_invoice_LUMPED_TAX.png"
+}

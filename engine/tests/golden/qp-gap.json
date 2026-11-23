@@ -1,0 +1,40 @@
+{
+  "case_id": "qp-gap",
+  "label": "Akasa Saver — 24-72h band, capped at 100% of airfare",
+  "rule_id": "QP-DOM-STATED-20260512",
+  "refund_minor": 297100,
+  "refund_formatted": "₹2,971.00",
+  "confidence": "MEDIUM",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 31000,
+      "contribution_formatted": "₹310.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 46000,
+      "contribution_formatted": "₹460.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 220100,
+      "contribution_formatted": "₹2,201.00",
+      "confidence": "MEDIUM"
+    },
+    {
+      "label": "Cancellation penalty",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "abstained": [],
+  "warnings": [
+    "QP-DOM-STATED-20260512: Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+    "QP-DOM-STATED-20260512: Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+    "QP-DOM-STATED-20260512: The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+  ]
+}

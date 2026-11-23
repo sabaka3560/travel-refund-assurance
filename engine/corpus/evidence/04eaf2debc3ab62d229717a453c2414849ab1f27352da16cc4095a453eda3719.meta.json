@@ -1,0 +1,12 @@
+{
+  "sha256": "04eaf2debc3ab62d229717a453c2414849ab1f27352da16cc4095a453eda3719",
+  "bytes": 758605,
+  "content_type": "image/jpeg",
+  "source_url": "client_upload:real_aiexpress_flight_ticket.jpg",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-08T16:03:40.231768+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: real_aiexpress_flight_ticket.jpg"
+}

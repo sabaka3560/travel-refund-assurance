@@ -1,0 +1,229 @@
+{
+  "case_id": "964e1649d511",
+  "created_at": "2026-09-08T16:24:11.468907+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.4",
+  "request_canonical_sha256": "5d983b701ff4475a4ec52e7c7c2fc5f46c14253ef46612d7a4d4ef321ac0a597",
+  "request": {
+    "ticket": {
+      "carrier": "QP",
+      "market": "DOMESTIC",
+      "origin": "BLR",
+      "destination": "BOM",
+      "booking_date": "2026-06-10",
+      "departure_local": "2026-09-25T14:40:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "4800.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "240.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "560.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "5600.00",
+      "fare_family": "FLEXI"
+    },
+    "cancellation": {
+      "instant_local": "2026-09-20T14:40:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "964e1649d511",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.4",
+    "cancellation": {
+      "instant": "2026-09-20T14:40:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": "₹3,101.00",
+      "minor": 310100,
+      "status": "COMPLETE",
+      "excludes": []
+    },
+    "confidence": "MEDIUM",
+    "review_status": "NOT_REQUIRED",
+    "lines": [
+      {
+        "label": "Tax K3 (GST on air transport)",
+        "original": "₹240.00",
+        "original_minor": 24000,
+        "contribution": "₹240.00",
+        "contribution_minor": 24000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Tax UDF (User Development Fee)",
+        "original": "₹560.00",
+        "original_minor": 56000,
+        "contribution": "₹560.00",
+        "contribution_minor": 56000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Base fare",
+        "original": "₹4,800.00",
+        "original_minor": 480000,
+        "contribution": "₹2,301.00",
+        "contribution_minor": 230100,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "QP-DOM-STATED-20260512-FLEXI: band T-72h+, penalty ₹2,499.00.",
+        "source_url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "evidence": {
+          "policy_id": "QP-DOM-STATED-20260512-FLEXI",
+          "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+          "clause_heading": "QP published cancellation terms",
+          "clause_quote": "Cancellation Fees: Domestic: 0-24 (Hours) - INR 3499 or 100% of the airfare charge (whichever is lower) 24-72 (Hours) - INR 2499 or 100% of the airfare charge (whichever is lower) 72 Hours + - INR 2499 or 100% of the airfare charge (whichever is lower). 100% of airfare will be forfieted for any changes or cancellations made within two (2) hours prior to the scheduled time of flight departure. No-Show Penalty: 100% of the airfare will be forfieted. [Terms] effective for bookings made from 20th August 2025 onwards.",
+          "url": "https://www.akasaair.com/quick-links/cancellation-policy",
+          "sha256": "e594e055ae1e142063180ccf82365228b215c0f601473580db08815c9c5f1cf8",
+          "capture_date": "2026-04-18",
+          "retrieved_at": "2026-09-05",
+          "content_verification": "VERIFIED: bands, cut-off, cap wording and the carrier-stated effective date were all read back from the preserved copy on 2026-09-08.",
+          "date_basis": "STATED",
+          "stated_effective_from": "2025-08-20",
+          "stated_effective_to": null,
+          "observed_from": "2026-09-05",
+          "observed_to": null,
+          "applicability_key": "BOOKING_DATE",
+          "key_used": "BOOKING_DATE",
+          "why_it_matches": "Carrier QP matches; market DOMESTIC matches; fare family FLEXI matches ['FLEXI']; applicability keyed to BOOKING_DATE (2026-06-10) falls inside this rule's stated window; cancellation at T-120.00h selects its band.",
+          "caveats": [
+            "Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+            "Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+            "The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+          ],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Cancellation penalty",
+        "original": null,
+        "original_minor": null,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "₹2,499.00 — shown for transparency; already deducted from the base-fare line above and deliberately NOT subtracted a second time.",
+        "source_url": "https://www.akasaair.com/quick-links/cancellation-policy",
+        "evidence": {
+          "policy_id": "QP-DOM-STATED-20260512-FLEXI",
+          "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+          "clause_heading": "QP published cancellation terms",
+          "clause_quote": "Cancellation Fees: Domestic: 0-24 (Hours) - INR 3499 or 100% of the airfare charge (whichever is lower) 24-72 (Hours) - INR 2499 or 100% of the airfare charge (whichever is lower) 72 Hours + - INR 2499 or 100% of the airfare charge (whichever is lower). 100% of airfare will be forfieted for any changes or cancellations made within two (2) hours prior to the scheduled time of flight departure. No-Show Penalty: 100% of the airfare will be forfieted. [Terms] effective for bookings made from 20th August 2025 onwards.",
+          "url": "https://www.akasaair.com/quick-links/cancellation-policy",
+          "sha256": "e594e055ae1e142063180ccf82365228b215c0f601473580db08815c9c5f1cf8",
+          "capture_date": "2026-04-18",
+          "retrieved_at": "2026-09-05",
+          "content_verification": "VERIFIED: bands, cut-off, cap wording and the carrier-stated effective date were all read back from the preserved copy on 2026-09-08.",
+          "date_basis": "STATED",
+          "stated_effective_from": "2025-08-20",
+          "stated_effective_to": null,
+          "observed_from": "2026-09-05",
+          "observed_to": null,
+          "applicability_key": "BOOKING_DATE",
+          "key_used": "BOOKING_DATE",
+          "why_it_matches": "Carrier QP matches; market DOMESTIC matches; fare family FLEXI matches ['FLEXI']; applicability keyed to BOOKING_DATE (2026-06-10) falls inside this rule's stated window; cancellation at T-120.00h selects its band.",
+          "caveats": [
+            "Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+            "Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+            "The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+          ],
+          "disputed": false
+        }
+      }
+    ],
+    "assumptions": [],
+    "unresolved": [],
+    "conflicts": [],
+    "rules_rejected": [
+      {
+        "policy_id": "6E-DOM-OBS-20260822",
+        "reason_code": "QUARANTINED",
+        "detail": "Rule quarantined: Structurally unverified: The source prints a fare-family x time-band grid — columns 'Lite Fare | Regular Fare | Flexi Plus Fare | Return Fare', each with its own band label — but this rule encodes the figures as three time bands for all fare families. The flattened capture text cannot settle the column-to-band mapping, and the corpus's own caveat records the mapping as inferred. A number derived from a misread grid is wrong even at LOW confidence, so the rule is withheld from resolution until it is re-transcribed from the rendered page."
+      },
+      {
+        "policy_id": "QP-DOM-STATED-20260512",
+        "reason_code": "FARE_FAMILY",
+        "detail": "QP-DOM-STATED-20260512: fare family FLEXI not in ['SAVER']"
+      },
+      {
+        "policy_id": "QP-DOM-OBS-20230401",
+        "reason_code": "TEMPORAL",
+        "detail": "QP-DOM-OBS-20230401: temporally invalid (key date 2026-06-10 is on or after next capture date 2025-08-20)"
+      }
+    ],
+    "comparison": null,
+    "cancel_instant": "2026-09-20T14:40:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": "₹3,101.00",
+    "refund_total_minor": 310100,
+    "abstained": [],
+    "warnings": [
+      "QP-DOM-STATED-20260512-FLEXI: Corrected 2026-09-08 against the preserved copy. The earlier encoding was wrong in four ways: it stated an effective date of 2026-05-12 (the copy says 'effective for bookings made from 20th August 2025 onwards'), omitted the 0-24h band entirely, recorded the 24-72h fee as uncaptured when the copy states it, and used a 4h cut-off where the copy says two (2) hours.",
+      "QP-DOM-STATED-20260512-FLEXI: Fee is 'INR X or 100% of the airfare charge (whichever is lower)', encoded as LESSER_OF with an AIRFARE_100PCT cap — a cheap ticket can never owe more than it cost.",
+      "QP-DOM-STATED-20260512-FLEXI: The copy also states a no-show penalty of 100% of the airfare. Not encoded as a band: no-show is outside the passenger-initiated cancellation scope of this rule."
+    ],
+    "rule_id": "QP-DOM-STATED-20260512-FLEXI",
+    "rule_source": "https://www.akasaair.com/quick-links/cancellation-policy"
+  }
+}

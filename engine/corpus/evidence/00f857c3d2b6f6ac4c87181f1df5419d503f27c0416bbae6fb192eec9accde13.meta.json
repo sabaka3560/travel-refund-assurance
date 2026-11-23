@@ -1,0 +1,12 @@
+{
+  "sha256": "00f857c3d2b6f6ac4c87181f1df5419d503f27c0416bbae6fb192eec9accde13",
+  "bytes": 99523,
+  "content_type": "application/pdf",
+  "source_url": "client_upload:SubhasishChakraborty_Air India Express_F89I3D_(BLR-NMI)_03 Sep 2026.Pdf",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-11T10:13:00.231132+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: SubhasishChakraborty_Air India Express_F89I3D_(BLR-NMI)_03 Sep 2026.Pdf"
+}

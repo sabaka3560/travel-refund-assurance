@@ -1,0 +1,290 @@
+{
+  "case_id": "c81803fa6211",
+  "created_at": "2026-09-08T15:55:41.004987+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.3",
+  "request_canonical_sha256": "063cb3516557059f5eb6d427662cd395bad9fbce64ecb157637552c8375a6713",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BOM",
+      "booking_date": "2025-11-20",
+      "departure_local": "2026-01-15T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "6700.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.00"
+        },
+        {
+          "code": "PSF",
+          "amount": "160.00"
+        }
+      ],
+      "carrier_surcharges": [
+        {
+          "code": "YR",
+          "amount": "250.00"
+        }
+      ],
+      "seller_fees": [
+        {
+          "code": "CONVENIENCE_ONLINE",
+          "amount": "250.00"
+        }
+      ],
+      "total_paid": "8420.00",
+      "fare_family": "SAVER"
+    },
+    "cancellation": {
+      "instant_local": "2026-01-10T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    },
+    "persist": true
+  },
+  "response": {
+    "case_id": "c81803fa6211",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.3",
+    "cancellation": {
+      "instant": "2026-01-10T18:00:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": "₹4,720.00",
+      "minor": 472000,
+      "status": "PARTIAL",
+      "excludes": [
+        "Carrier surcharge YR (follows fare rule)"
+      ]
+    },
+    "confidence": "LOW",
+    "review_status": "NOT_REQUIRED",
+    "lines": [
+      {
+        "label": "Tax K3 (GST on air transport)",
+        "original": "₹352.00",
+        "original_minor": 35200,
+        "contribution": "₹352.00",
+        "contribution_minor": 35200,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Tax UDF (User Development Fee)",
+        "original": "₹708.00",
+        "original_minor": 70800,
+        "contribution": "₹708.00",
+        "contribution_minor": 70800,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Tax PSF (Passenger Service Fee)",
+        "original": "₹160.00",
+        "original_minor": 16000,
+        "contribution": "₹160.00",
+        "contribution_minor": 16000,
+        "confidence": "HIGH",
+        "classification_confidence": "HIGH",
+        "basis": "DGCA-CAR-S3-M-II — Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable. Obligation attaches to the operating permit (Rule 133A of the Aircraft Rules, 1937), not to fare filing, so it binds this carrier regardless of PSS.",
+        "source_url": null,
+        "evidence": {
+          "policy_id": "DGCA-CAR-S3-M-II",
+          "rule_source_class": "REGULATORY_INSTRUMENT",
+          "clause_heading": "STATUTORY_TAX_REFUND",
+          "clause_quote": "Statutory taxes and airport charges are refundable on cancellation, non-utilisation or no-show, INCLUDING on promotional and special fares where the basic fare is non-refundable.",
+          "url": null,
+          "sha256": null,
+          "capture_date": null,
+          "retrieved_at": null,
+          "content_verification": null,
+          "date_basis": "STATUTE",
+          "applicability_key": "OPERATING_PERMIT",
+          "why_it_matches": "The obligation derives from Rule 133A of the Aircraft Rules, 1937 and attaches to the operating permit, not to fare filing or distribution technology, so it binds this carrier regardless of PSS.",
+          "caveats": [],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Carrier surcharge YR",
+        "original": "₹250.00",
+        "original_minor": 25000,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "INSUFFICIENT",
+        "classification_confidence": null,
+        "basis": "YQ/YR are carrier-imposed, not statutory taxes. Their refundability follows the fare rule, which is not retrievable for this ticket.",
+        "source_url": null,
+        "evidence": null
+      },
+      {
+        "label": "Base fare",
+        "original": "₹6,700.00",
+        "original_minor": 670000,
+        "contribution": "₹3,500.00",
+        "contribution_minor": 350000,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "SG-DOM-STATED-20250228: band T-96h+, penalty ₹3,200.00.",
+        "source_url": "https://corporate.spicejet.com/Tnc.aspx",
+        "evidence": {
+          "policy_id": "SG-DOM-STATED-20250228",
+          "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+          "clause_heading": "SG published cancellation terms",
+          "clause_quote": "'2950 + Fare Difference' before Feb 28, 2025 vs '2999 + Fare Difference' on/after; '4275' before Dec 12, 2025 vs '4899' on/after. INR 3200 at T-120h for bookings before 12-Dec-2025.",
+          "url": "https://corporate.spicejet.com/Tnc.aspx",
+          "sha256": "237bda456b628f07559c005eb08b1a2ffbd4cf324b8dd2e1ba0f68315d3eae71",
+          "capture_date": "2026-08-21",
+          "retrieved_at": "2026-09-05",
+          "content_verification": "VERIFIED: every fee figure asserted by this rule is present in the preserved copy.",
+          "date_basis": "STATED",
+          "stated_effective_from": "2025-02-28",
+          "stated_effective_to": "2025-12-12",
+          "observed_from": "2026-09-05",
+          "observed_to": null,
+          "applicability_key": "BOOKING_DATE",
+          "key_used": "BOOKING_DATE",
+          "why_it_matches": "Carrier SG matches; market DOMESTIC matches; fare family SAVER matches ['*']; applicability keyed to BOOKING_DATE (2025-11-20) falls inside this rule's stated window; cancellation at T-120.00h selects its band.",
+          "caveats": [
+            "The 2950/2999 pair is the CHANGE fee, not cancellation - not encoded here.",
+            "This is the single most valuable test fixture in the corpus: a SpiceJet ticket booked 2025-02-27 vs 2025-03-01, both cancelled at T-120h, must yield different fees.",
+            "Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+          ],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Cancellation penalty",
+        "original": null,
+        "original_minor": null,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "₹3,200.00 — shown for transparency; already deducted from the base-fare line above and deliberately NOT subtracted a second time.",
+        "source_url": "https://corporate.spicejet.com/Tnc.aspx",
+        "evidence": {
+          "policy_id": "SG-DOM-STATED-20250228",
+          "rule_source_class": "CARRIER_PUBLISHED_PAGE_STATED",
+          "clause_heading": "SG published cancellation terms",
+          "clause_quote": "'2950 + Fare Difference' before Feb 28, 2025 vs '2999 + Fare Difference' on/after; '4275' before Dec 12, 2025 vs '4899' on/after. INR 3200 at T-120h for bookings before 12-Dec-2025.",
+          "url": "https://corporate.spicejet.com/Tnc.aspx",
+          "sha256": "237bda456b628f07559c005eb08b1a2ffbd4cf324b8dd2e1ba0f68315d3eae71",
+          "capture_date": "2026-08-21",
+          "retrieved_at": "2026-09-05",
+          "content_verification": "VERIFIED: every fee figure asserted by this rule is present in the preserved copy.",
+          "date_basis": "STATED",
+          "stated_effective_from": "2025-02-28",
+          "stated_effective_to": "2025-12-12",
+          "observed_from": "2026-09-05",
+          "observed_to": null,
+          "applicability_key": "BOOKING_DATE",
+          "key_used": "BOOKING_DATE",
+          "why_it_matches": "Carrier SG matches; market DOMESTIC matches; fare family SAVER matches ['*']; applicability keyed to BOOKING_DATE (2025-11-20) falls inside this rule's stated window; cancellation at T-120.00h selects its band.",
+          "caveats": [
+            "The 2950/2999 pair is the CHANGE fee, not cancellation - not encoded here.",
+            "This is the single most valuable test fixture in the corpus: a SpiceJet ticket booked 2025-02-27 vs 2025-03-01, both cancelled at T-120h, must yield different fees.",
+            "Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+          ],
+          "disputed": false
+        }
+      },
+      {
+        "label": "Seller fee CONVENIENCE_ONLINE",
+        "original": "₹250.00",
+        "original_minor": 25000,
+        "contribution": "₹0.00",
+        "contribution_minor": 0,
+        "confidence": "MEDIUM",
+        "classification_confidence": null,
+        "basis": "Separately disclosed intermediary charge; excluded from the airline refund pool and not subtracted again from it.",
+        "source_url": null,
+        "evidence": null
+      }
+    ],
+    "assumptions": [],
+    "unresolved": [
+      "Carrier surcharge YR: refundability not determinable"
+    ],
+    "conflicts": [],
+    "rules_rejected": [
+      {
+        "policy_id": "SG-DOM-STATED-20251212",
+        "reason_code": "TEMPORAL",
+        "detail": "SG-DOM-STATED-20251212: temporally invalid (key date 2025-11-20 precedes stated effective date 2025-12-12)"
+      }
+    ],
+    "comparison": null,
+    "cancel_instant": "2026-01-10T18:00:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": "₹4,720.00",
+    "refund_total_minor": 472000,
+    "abstained": [
+      "Carrier surcharge YR: refundability not determinable"
+    ],
+    "warnings": [
+      "SG-DOM-STATED-20250228: The 2950/2999 pair is the CHANGE fee, not cancellation - not encoded here.",
+      "SG-DOM-STATED-20250228: This is the single most valuable test fixture in the corpus: a SpiceJet ticket booked 2025-02-27 vs 2025-03-01, both cancelled at T-120h, must yield different fees.",
+      "SG-DOM-STATED-20250228: Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+    ],
+    "rule_id": "SG-DOM-STATED-20250228",
+    "rule_source": "https://corporate.spicejet.com/Tnc.aspx"
+  }
+}

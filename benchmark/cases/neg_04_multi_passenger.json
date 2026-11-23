@@ -1,0 +1,47 @@
+{
+  "id": "neg_04_multi_passenger",
+  "set": "negative",
+  "description": "Multi-passenger ticket out of scope -> refusal",
+  "provenance": "synthetic",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BOM",
+      "booking_date": "2026-01-10",
+      "departure_local": "2026-04-01T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 2,
+      "base_fare": "13400.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "704.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "1416.00"
+        },
+        {
+          "code": "PSF",
+          "amount": "320.00"
+        }
+      ],
+      "total_paid": "15840.00",
+      "fare_family": "SAVER"
+    },
+    "cancellation": {
+      "instant_local": "2026-03-27T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO"
+    }
+  },
+  "expected": {
+    "must_abstain": true,
+    "abstain_target": "TOTAL",
+    "prohibit_false_confidence": true
+  },
+  "expectation_source": "Derived from the corpus and this engine's own semantics. NOT a client-supplied or carrier-supplied reference answer."
+}

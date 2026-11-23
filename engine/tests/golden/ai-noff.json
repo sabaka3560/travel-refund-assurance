@@ -1,0 +1,38 @@
+{
+  "case_id": "ai-noff",
+  "label": "Fare family not printed — partial answer",
+  "rule_id": null,
+  "refund_minor": 122000,
+  "refund_formatted": "₹1,220.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 35200,
+      "contribution_formatted": "₹352.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 70800,
+      "contribution_formatted": "₹708.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax PSF (Passenger Service Fee)",
+      "contribution_minor": 16000,
+      "contribution_formatted": "₹160.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    }
+  ],
+  "abstained": [
+    "Fare component: No fare family is recorded on this ticket, and AI's published table sets a different cancellation charge for each fare family, so no row can be selected. The fare brand (or the fare conditions issued with the ticket) is needed — the dates are not the problem here."
+  ],
+  "warnings": []
+}

@@ -1,0 +1,12 @@
+{
+  "sha256": "b934a0b93249c5f362637043d3cfd707a3f6bdea09d59714ff3e76e7fe646081",
+  "bytes": 852338,
+  "content_type": "image/jpeg",
+  "source_url": "client_upload:real_indigo_flight_ticket.jpg",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-08T16:01:01.069920+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: real_indigo_flight_ticket.jpg"
+}

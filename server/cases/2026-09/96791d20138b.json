@@ -1,0 +1,99 @@
+{
+  "case_id": "96791d20138b",
+  "created_at": "2026-09-11T09:51:08.932573+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.4",
+  "request_canonical_sha256": "12639ece82bc602b8b9e6e0493e6aee7b02540edfd237077a5d05addb227f424",
+  "request": {
+    "ticket": {
+      "carrier": "SG",
+      "market": "DOMESTIC",
+      "origin": "DEL",
+      "destination": "BOM",
+      "route": "DEL→BOM",
+      "fare_family": "SAVER",
+      "booking_date": "2026-01-10",
+      "booking_time": null,
+      "departure_local": "2026-04-01T18:00:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "6700.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "352.00"
+        },
+        {
+          "code": "UDF",
+          "amount": "708.00"
+        },
+        {
+          "code": "PSF",
+          "amount": "160.00"
+        }
+      ],
+      "carrier_surcharges": [],
+      "seller_fees": [],
+      "total_paid": "7920.00",
+      "corporate": false,
+      "reissued": true,
+      "partially_used": false
+    },
+    "cancellation": {
+      "instant_local": "2026-03-27T18:00:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO",
+      "source_ref": null,
+      "preset_label": "T-120h",
+      "cause": "PASSENGER_INITIATED"
+    },
+    "extraction_ref": null,
+    "persist": true
+  },
+  "response": {
+    "case_id": "96791d20138b",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.4",
+    "cancellation": {
+      "instant": "2026-03-27T18:00:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": "T-120h",
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": null,
+      "minor": null,
+      "status": "NONE",
+      "excludes": []
+    },
+    "confidence": "INSUFFICIENT",
+    "review_status": "NOT_REQUIRED",
+    "lines": [],
+    "assumptions": [],
+    "unresolved": [
+      "Ticket was reissued. The exchange chain is required and is out of scope."
+    ],
+    "conflicts": [],
+    "rules_rejected": [],
+    "comparison": null,
+    "cancel_instant": "2026-03-27T18:00:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": null,
+    "refund_total_minor": null,
+    "abstained": [
+      "Ticket was reissued. The exchange chain is required and is out of scope."
+    ],
+    "warnings": [],
+    "rule_id": null,
+    "rule_source": null
+  }
+}

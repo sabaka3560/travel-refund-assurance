@@ -1,0 +1,96 @@
+{
+  "case_id": "abd1c311f1e4",
+  "created_at": "2026-09-11T10:15:18.027578+05:30",
+  "engine_version": "2.1.0",
+  "semantics_version": "2026-09-07.2",
+  "corpus_version": "2026-09-08.4",
+  "request_canonical_sha256": "8f80df85f4e3c138605e4d3b2d3962f80b176ab8a71a49c123d5ece46a2b3151",
+  "request": {
+    "ticket": {
+      "carrier": "IX",
+      "market": "DOMESTIC",
+      "origin": "BLR",
+      "destination": "NMI",
+      "route": "BLR→NMI",
+      "fare_family": "VALUE",
+      "booking_date": "2026-08-28",
+      "booking_time": null,
+      "departure_local": "2026-09-03T18:40:00",
+      "departure_timezone": "Asia/Kolkata",
+      "currency": "INR",
+      "passengers": 1,
+      "base_fare": "3926.00",
+      "taxes": [
+        {
+          "code": "K3",
+          "amount": "232.00"
+        }
+      ],
+      "carrier_surcharges": [
+        {
+          "code": "YR",
+          "amount": "399.00"
+        }
+      ],
+      "seller_fees": [],
+      "total_paid": "6073.00",
+      "corporate": true,
+      "reissued": false,
+      "partially_used": false
+    },
+    "cancellation": {
+      "instant_local": "2026-08-29T18:40:00",
+      "timezone": "Asia/Kolkata",
+      "basis": "USER_SCENARIO",
+      "source_ref": null,
+      "preset_label": null,
+      "cause": "PASSENGER_INITIATED"
+    },
+    "extraction_ref": "00f857c3d2b6f6ac4c87181f1df5419d503f27c0416bbae6fb192eec9accde13",
+    "persist": true
+  },
+  "response": {
+    "case_id": "abd1c311f1e4",
+    "engine_version": "2.1.0",
+    "semantics_version": "2026-09-07.2",
+    "corpus_version": "2026-09-08.4",
+    "cancellation": {
+      "instant": "2026-08-29T18:40:00+05:30",
+      "basis": "USER_SCENARIO",
+      "preset_label": null,
+      "source_ref": null
+    },
+    "timeline": {
+      "status": "VALID",
+      "seconds_to_departure": 432000,
+      "hours_to_departure": "120.00",
+      "days_to_departure_display": "5"
+    },
+    "total": {
+      "amount": null,
+      "minor": null,
+      "status": "NONE",
+      "excludes": []
+    },
+    "confidence": "INSUFFICIENT",
+    "review_status": "NOT_REQUIRED",
+    "lines": [],
+    "assumptions": [],
+    "unresolved": [
+      "Document does not reconcile: components ₹4,557.00 vs stated total ₹6,073.00 (delta -₹1,516.00). Refusing to adjust components to force a match."
+    ],
+    "conflicts": [],
+    "rules_rejected": [],
+    "comparison": null,
+    "cancel_instant": "2026-08-29T18:40:00+05:30",
+    "hours_before": 120.0,
+    "refund_total": null,
+    "refund_total_minor": null,
+    "abstained": [
+      "Document does not reconcile: components ₹4,557.00 vs stated total ₹6,073.00 (delta -₹1,516.00). Refusing to adjust components to force a match."
+    ],
+    "warnings": [],
+    "rule_id": null,
+    "rule_source": null
+  }
+}

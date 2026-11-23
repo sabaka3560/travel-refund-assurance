@@ -1,0 +1,12 @@
+{
+  "sha256": "95872b134c9442ddee8b507a6b182bc1fe15eb9ad44536556a0095d778f2d95c",
+  "bytes": 3138,
+  "content_type": "application/pdf",
+  "source_url": "client_upload:03_airindia_DEL-BOM_flex.pdf",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-11T09:45:26.015086+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 03_airindia_DEL-BOM_flex.pdf"
+}

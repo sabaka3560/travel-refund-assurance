@@ -1,0 +1,60 @@
+{
+  "case_id": "sg-after",
+  "label": "Identical ticket, booked AFTER the change",
+  "rule_id": "SG-DOM-STATED-20251212",
+  "refund_minor": 402100,
+  "refund_formatted": "₹4,021.00",
+  "confidence": "LOW",
+  "lines": [
+    {
+      "label": "Tax K3 (GST on air transport)",
+      "contribution_minor": 35200,
+      "contribution_formatted": "₹352.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax UDF (User Development Fee)",
+      "contribution_minor": 70800,
+      "contribution_formatted": "₹708.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Tax PSF (Passenger Service Fee)",
+      "contribution_minor": 16000,
+      "contribution_formatted": "₹160.00",
+      "confidence": "HIGH"
+    },
+    {
+      "label": "Carrier surcharge YR",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "label": "Base fare",
+      "contribution_minor": 280100,
+      "contribution_formatted": "₹2,801.00",
+      "confidence": "MEDIUM"
+    },
+    {
+      "label": "Cancellation penalty",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "MEDIUM"
+    },
+    {
+      "label": "Seller fee AGENCY",
+      "contribution_minor": 0,
+      "contribution_formatted": "₹0.00",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "abstained": [
+    "Carrier surcharge YR: refundability not determinable"
+  ],
+  "warnings": [
+    "SG-DOM-STATED-20251212: BEST EVIDENCE OF ANY CARRIER: SpiceJet's own live page retains both the old and new fee values with explicit booking-date boundaries.",
+    "SG-DOM-STATED-20251212: The >96h figure (3899) and the <96h figure (4899) come from two different statements on the same page; their band assignment is the most plausible reading but was not cross-verified against a single table.",
+    "SG-DOM-STATED-20251212: Condition A of the published table (nil cancellation fee within 24h of booking when departure is more than seven days away) is encoded as `free_look`. It cannot be evaluated without the booking TIME, which most documents do not print — in that case the engine reports the condition as unevaluated rather than assuming it does not apply."
+  ]
+}

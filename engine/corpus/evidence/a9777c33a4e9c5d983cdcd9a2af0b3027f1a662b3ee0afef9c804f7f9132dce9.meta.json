@@ -1,0 +1,12 @@
+{
+  "sha256": "a9777c33a4e9c5d983cdcd9a2af0b3027f1a662b3ee0afef9c804f7f9132dce9",
+  "bytes": 263362,
+  "content_type": "image/png",
+  "source_url": "client_upload:01_spicejet_DEL-BOM.png",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-07T23:46:25.035339+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 01_spicejet_DEL-BOM.png"
+}

@@ -1,0 +1,12 @@
+{
+  "sha256": "828641143d506ee084a948b445791753d0f70cc10a7dab3c36c751e3b4cb2708",
+  "bytes": 3262,
+  "content_type": "application/pdf",
+  "source_url": "client_upload:01_spicejet_DEL-BOM.pdf",
+  "capture_kind": "CLIENT_DOCUMENT",
+  "fetched_at": "2026-09-11T09:54:19.078474+05:30",
+  "http_status": 200,
+  "carrier_capture_date": null,
+  "redistribution_restricted": true,
+  "notes": "Uploaded client document for extraction: 01_spicejet_DEL-BOM.pdf"
+}

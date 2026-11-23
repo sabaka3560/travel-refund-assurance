@@ -1,0 +1,1396 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Refund Reconstruction Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F2F4F7;--surface:#FFFFFF;--surface-2:#EAEEF3;--surface-3:#DFE5EC;
+  --ink:#101720;--ink-mid:#48545F;--ink-soft:#77848F;--rule:#D5DCE4;--rule-2:#BAC5D0;
+  --accent:#14706B;--accent-bg:#E0EFEC;--high:#14706B;--high-bg:#E0EFEC;
+  --med:#8A6212;--med-bg:#F7EEDA;--low:#9A5A16;--low-bg:#F8E9D9;
+  --none:#A63220;--none-bg:#F9E5E1;
+  --shadow:0 1px 2px rgba(16,23,32,.05),0 10px 28px -16px rgba(16,23,32,.22);
+}
+:root[data-theme="dark"]{
+  --ground:#0C1015;--surface:#141A21;--surface-2:#1B222B;--surface-3:#232C36;
+  --ink:#E9EDF2;--ink-mid:#AFBAC6;--ink-soft:#7F8C99;--rule:#252E38;--rule-2:#36414D;
+  --accent:#44A69E;--accent-bg:#102A28;--high:#44A69E;--high-bg:#102A28;
+  --med:#C99A34;--med-bg:#2B2211;--low:#D08A45;--low-bg:#2E2013;
+  --none:#DF6A52;--none-bg:#2E1712;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:Archivo,system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.top{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--rule)}
+.top-in{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;padding:16px 0}
+.brand b{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
+.brand span{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace}
+.tabs{display:flex;gap:2px;margin-left:auto}
+.tab{background:none;border:none;padding:18px 16px 15px;font-size:.82rem;font-weight:600;color:var(--ink-soft);border-bottom:3px solid transparent}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.themebtn{background:var(--surface-2);border:1px solid var(--rule);border-radius:6px;padding:6px 12px;font-size:.72rem;font-weight:600;color:var(--ink-mid);margin-left:14px;font-family:"IBM Plex Mono",monospace;letter-spacing:.05em}
+main{max-width:1320px;margin:0 auto;padding:28px 24px 80px}
+.panel{display:none}.panel.on{display:block}
+h2{font-size:1.32rem;font-weight:700;letter-spacing:-.015em;margin:0 0 4px}
+.sub{color:var(--ink-mid);font-size:.9rem;margin:0 0 22px;max-width:75ch}
+.explain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin-bottom:22px}
+@media(max-width:860px){.explain{grid-template-columns:1fr}.ex-arrow{display:none}}
+.ex-k{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-family:"IBM Plex Mono",monospace;font-weight:600;margin-bottom:6px}
+.ex-col p{margin:0;font-size:.82rem;line-height:1.5;color:var(--ink-mid)}
+.ex-arrow{font-family:"IBM Plex Mono",monospace;font-size:1.1rem;color:var(--ink-soft);display:grid;place-items:center;font-weight:600}
+.demo{display:grid;grid-template-columns:310px minmax(0,1fr);gap:22px;align-items:start}
+.demo>*,.cmp-grid>*,.flag>*{min-width:0}
+.res-meta,.mono,.rid,.flag,.ev-v{overflow-wrap:anywhere}
+@media(max-width:960px){.demo{grid-template-columns:1fr}}
+.side-h{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px;font-family:"IBM Plex Mono",monospace}
+.drop{border:2px dashed var(--rule-2);border-radius:9px;background:var(--surface);cursor:pointer;margin-bottom:8px}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-bg)}
+.drop-in{padding:22px 14px;text-align:center;display:grid;gap:3px}
+.drop-ic{font-size:1.3rem;color:var(--accent);font-weight:600;line-height:1;font-family:"IBM Plex Mono",monospace}
+.drop-t{font-size:.88rem;font-weight:600}.drop-s{font-size:.75rem;color:var(--ink-soft)}
+.reading{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:13px 15px;font-size:.83rem;color:var(--ink-mid);margin-bottom:8px}
+.spin{width:14px;height:14px;border:2px solid var(--rule-2);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.addbtn{width:100%;background:none;border:1px solid var(--rule);border-radius:7px;padding:10px;font-size:.8rem;font-weight:500;color:var(--ink-mid)}
+.addbtn:hover{border-color:var(--rule-2);color:var(--ink)}
+.tickets{display:flex;flex-direction:column;gap:7px}
+.tk{text-align:left;background:var(--surface);border:1px solid var(--rule);border-radius:7px;padding:12px 13px;display:grid;gap:3px}
+.tk:hover{border-color:var(--rule-2)}
+.tk[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-bg);box-shadow:inset 3px 0 0 var(--accent)}
+.tk-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tk-car{font-weight:600;font-size:.9rem}
+.tk-amt{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-mid)}
+.tk-note{font-size:.75rem;color:var(--ink-soft);line-height:1.35}
+
+/* Timing Bar on main demo */
+.statement{background:var(--surface-2);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;margin:0 0 18px}
+.statement-k{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-family:"IBM Plex Mono",monospace;margin-bottom:7px}
+.statement p{margin:0 0 8px;font-size:.95rem;line-height:1.6;color:var(--ink);max-width:78ch}
+.statement .statement-foot{font-size:.78rem;color:var(--ink-soft);margin:0;border-top:1px solid var(--rule);padding-top:8px}
+.step{margin-bottom:4px}
+.step-h{display:flex;gap:11px;align-items:flex-start;margin-bottom:14px;padding-bottom:11px;border-bottom:1px solid var(--rule)}
+.step-n{flex:none;width:23px;height:23px;border-radius:50%;background:var(--accent);color:#fff;font-size:.76rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace}
+.step-t{font-size:.94rem;font-weight:700;color:var(--ink)}
+.step-s{font-size:.78rem;color:var(--ink-soft);line-height:1.5;margin-top:2px;max-width:68ch}
+.need-box{background:var(--surface-2);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:14px}
+.need-box label{font-size:.78rem;font-weight:600;color:var(--ink-mid)}
+.need-box select{margin-top:5px;width:100%;padding:7px 9px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:.85rem}
+.need-note{font-size:.77rem;line-height:1.5;margin:8px 0 0;color:var(--ink-soft)}
+.need-note.req{color:var(--none);font-weight:600}
+.canc-bar{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.canc-bar-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.canc-bar-title{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);font-family:"IBM Plex Mono",monospace}
+.preset-group{display:flex;gap:6px;flex-wrap:wrap}
+.pbtn{background:var(--surface-2);border:1px solid var(--rule);border-radius:5px;padding:5px 10px;font-size:.74rem;font-weight:600;color:var(--ink-mid);font-family:"IBM Plex Mono",monospace}
+.pbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.canc-bar-inputs{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.canc-bar-inputs label{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--ink-mid)}
+.canc-bar-inputs input,.canc-bar-inputs select{font-family:inherit;font-size:.82rem;padding:6px 9px;border:1px solid var(--rule);border-radius:5px;background:var(--surface-2);color:var(--ink)}
+.canc-preview{font-size:.78rem;font-family:"IBM Plex Mono",monospace;color:var(--accent);font-weight:600}
+
+/* Timeline strip */
+.timeline{background:var(--surface-2);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;margin:16px 0;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:12px}
+@media(max-width:780px){.timeline{grid-template-columns:1fr;gap:10px}}
+.tl-node{display:flex;flex-direction:column;gap:3px}
+.tl-k{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;font-weight:600}
+.tl-v{font-size:.84rem;font-weight:600;color:var(--ink)}
+.tl-sub{font-size:.73rem;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace}
+.tl-arrow{text-align:center;font-size:.75rem;font-family:"IBM Plex Mono",monospace;color:var(--accent);padding:0 4px}
+.tl-arrow-line{height:2px;background:var(--rule-2);margin:4px 0;position:relative}
+
+/* Result cards */
+.res{background:var(--surface);border:1px solid var(--rule);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.res-h{padding:18px 22px;border-bottom:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.res-h h3{margin:0;font-size:1.02rem;font-weight:600}
+.res-meta{font-family:"IBM Plex Mono",monospace;font-size:.73rem;color:var(--ink-soft);margin-top:3px}
+.cmp{background:var(--surface-2);border:1px solid var(--rule-2);border-radius:6px;padding:7px 13px;font-size:.78rem;font-weight:600;color:var(--ink)}
+.headline{padding:20px 22px;display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;border-bottom:1px solid var(--rule)}
+.big{font-family:"IBM Plex Mono",monospace;font-size:2.2rem;font-weight:600;letter-spacing:-.02em;line-height:1}
+.big.na{font-size:1.25rem;color:var(--none)}
+.big-k{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-bottom:7px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:4px;font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-HIGH{color:var(--high);background:var(--high-bg)}.p-MEDIUM{color:var(--med);background:var(--med-bg)}
+.p-LOW{color:var(--low);background:var(--low-bg)}.p-INSUFFICIENT{color:var(--none);background:var(--none-bg)}
+.p-AUTHORITATIVE{color:var(--high);background:var(--high-bg)}
+.p-COMPLETE{color:var(--high);background:var(--high-bg)}.p-PARTIAL{color:var(--med);background:var(--med-bg)}
+.p-NONE{color:var(--none);background:var(--none-bg)}
+
+/* Partial Total Callout */
+.partial-callout{margin:0 22px 16px;background:var(--med-bg);border:1px solid var(--med);border-radius:8px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start}
+.partial-callout .p-ic{font-size:1.1rem;color:var(--med);font-weight:700;line-height:1}
+.partial-callout p{margin:0;font-size:.82rem;line-height:1.45;color:var(--ink)}
+
+/* Ledger table & Evidence Drawer */
+.tbl{width:100%;border-collapse:collapse;font-size:.87rem}
+.tbl th{text-align:left;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;padding:11px 22px;background:var(--surface-2);border-bottom:1px solid var(--rule);font-weight:600}
+.tbl td{padding:12px 22px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .num{font-family:"IBM Plex Mono",monospace;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.row-off td{color:var(--ink-soft)}.row-off .num.zero{opacity:.45}
+.basis{font-size:.78rem;color:var(--ink-soft);margin-top:4px;line-height:1.45;max-width:62ch}
+.lbl{font-weight:500}
+.tot td{background:var(--surface-2);font-weight:700;border-top:2px solid var(--rule-2)}
+.ev-btn{background:none;border:1px solid var(--rule);border-radius:4px;padding:3px 7px;font-size:.7rem;font-family:"IBM Plex Mono",monospace;color:var(--ink-mid);margin-top:6px;cursor:pointer}
+.ev-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ev-drawer{display:none;margin-top:10px;padding:12px 14px;background:var(--surface-2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:.78rem;line-height:1.5}
+.ev-drawer.open{display:block}
+.ev-row{display:grid;grid-template-columns:130px 1fr;gap:8px;margin-bottom:6px}
+@media(max-width:600px){.ev-row{grid-template-columns:1fr}}
+.ev-k{font-weight:600;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;font-size:.72rem}
+.ev-v{color:var(--ink)}
+.quote{font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.55;background:var(--surface);border:1px solid var(--rule);padding:9px 12px;border-radius:4px;color:var(--ink-mid);margin:4px 0 6px;overflow-x:auto;white-space:pre-wrap}
+
+/* Panels */
+.diag-panel{padding:16px 22px;border-top:1px solid var(--rule)}
+.diag-h{font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);font-family:"IBM Plex Mono",monospace;margin:0 0 10px}
+.flags{display:grid;gap:8px}
+.flag{display:grid;grid-template-columns:auto 1fr;gap:9px;font-size:.82rem;line-height:1.45;align-items:start}
+.flag .ic{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:.72rem;padding-top:1px}
+.f-stop .ic{color:var(--none)}.f-warn .ic{color:var(--med)}.f-info .ic{color:var(--accent)}
+.flag span:last-child{color:var(--ink-mid)}
+.foot-note{padding:13px 22px;background:var(--surface-2);font-size:.75rem;color:var(--ink-soft);border-top:1px solid var(--rule)}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.cmp-grid{grid-template-columns:1fr}}
+.delta{margin-top:16px;background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:8px;padding:18px 22px}
+.delta h4{margin:0 0 6px;font-size:.95rem}
+.delta p{margin:0;font-size:.87rem;color:var(--ink-mid);max-width:76ch}
+
+/* Review action form */
+.review-box{background:var(--surface-2);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;margin-top:10px}
+.review-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.review-form input,.review-form select{font-family:inherit;font-size:.8rem;padding:6px 10px;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+.btn-rev{background:var(--ink);color:var(--ground);border:none;border-radius:5px;padding:6px 14px;font-size:.8rem;font-weight:600}
+
+/* Stats, Corpus, & Coverage */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:9px;overflow:hidden;margin-bottom:20px}
+.stat{background:var(--surface);padding:15px 18px}
+.stat-k{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-bottom:5px}
+.stat-v{font-family:"IBM Plex Mono",monospace;font-size:1.45rem;font-weight:600;line-height:1}
+.stat-n{font-size:.74rem;color:var(--ink-soft);margin-top:3px}
+.cov-sec{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.cov-sec h3{margin:0 0 4px;font-size:1.05rem}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fb{background:var(--surface);border:1px solid var(--rule);border-radius:20px;padding:6px 14px;font-size:.78rem;font-weight:500;color:var(--ink-mid)}
+.fb[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.rules{display:flex;flex-direction:column;gap:8px}
+.rule{background:var(--surface);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.rule.quarantined{border-color:var(--none);border-left:4px solid var(--none)}
+.rule-h{width:100%;background:none;border:none;text-align:left;padding:13px 16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.rule-h:hover{background:var(--surface-2)}
+.rid{font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:500}
+.rmeta{font-size:.75rem;color:var(--ink-soft);margin-top:2px}
+.rtags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.rule-b{padding:14px 16px 16px;display:none;border-top:1px solid var(--rule)}
+.rule.open .rule-b{display:block}
+.bands{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.band{font-family:"IBM Plex Mono",monospace;font-size:.74rem;background:var(--surface-2);border:1px solid var(--rule);border-radius:5px;padding:5px 10px}
+.cav{font-size:.78rem;color:var(--ink-mid);line-height:1.5;display:grid;grid-template-columns:auto 1fr;gap:8px;margin-bottom:6px}
+.cav .ic{color:var(--med);font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:.7rem}
+.src{font-size:.75rem;font-family:"IBM Plex Mono",monospace;word-break:break-all;margin-top:10px}
+.src a{color:var(--accent)}
+
+/* Pipeline */
+.pipe{display:grid;margin:22px 0 10px}
+.pstep{display:grid;grid-template-columns:40px 1fr;gap:16px;position:relative;padding-bottom:20px}
+.pstep:not(:last-child)::before{content:"";position:absolute;left:19px;top:38px;bottom:0;width:2px;background:var(--rule)}
+.pnum{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.82rem;background:var(--surface-2);border:1px solid var(--rule);position:relative;z-index:1}
+.pstep.det .pnum{background:var(--high-bg);border-color:var(--high);color:var(--high)}
+.pstep.stop .pnum{background:var(--none-bg);border-color:var(--none);color:var(--none)}
+.ptitle{font-weight:600;font-size:.97rem;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:2px}
+.ptext{font-size:.86rem;color:var(--ink-mid);line-height:1.5;max-width:66ch}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor}
+.c-ai{color:var(--ink-soft)}.c-det{color:var(--high)}.c-stop{color:var(--none)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:18px 20px}
+.card h4{margin:0 0 7px;font-size:.93rem}
+.card p{margin:0;font-size:.84rem;color:var(--ink-mid);line-height:1.5}
+.card .n{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;font-weight:600;line-height:1;margin-bottom:6px;display:block}
+.note{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--med);border-radius:8px;padding:16px 20px;margin:18px 0}
+.note h4{margin:0 0 6px;font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--med);font-family:"IBM Plex Mono",monospace}
+.note p{margin:0;font-size:.87rem;color:var(--ink-mid);line-height:1.55;max-width:76ch}
+.note p+p{margin-top:8px}
+.note.go{border-left-color:var(--accent)}.note.go h4{color:var(--accent)}
+.scaletbl{width:100%;border-collapse:collapse;font-size:.86rem;background:var(--surface);border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.scaletbl th{text-align:left;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;padding:11px 16px;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.scaletbl td{padding:11px 16px;border-bottom:1px solid var(--rule)}
+.scaletbl tr:last-child td{border-bottom:none}
+.scaletbl .num{font-family:"IBM Plex Mono",monospace;text-align:right}
+.tw{overflow-x:auto}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:60;background:rgba(16,23,32,.5);display:grid;place-items:center;padding:20px}
+.modal[hidden]{display:none!important}
+.sheet{background:var(--surface);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow);width:min(720px,100%);max-height:88vh;display:flex;flex-direction:column}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--rule)}
+.sheet-h h3{margin:0;font-size:1.02rem}
+.x{background:none;border:none;font-size:1.5rem;line-height:1;color:var(--ink-soft);padding:0 4px}
+.sheet-b{padding:18px 22px;overflow-y:auto}
+.sheet-f{padding:14px 22px;border-top:1px solid var(--rule);display:flex;gap:10px;justify-content:flex-end}
+.primary{background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:6px;padding:8px 18px;font-size:.82rem;font-weight:600}
+.primary:disabled{opacity:.4;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .top-in{gap:8px;padding:0 16px}.brand{flex-wrap:wrap;gap:4px 10px}
+  .tabs{margin-left:0;flex-wrap:wrap}.tab{padding:10px 8px}.themebtn{margin-left:4px}
+  main{padding:20px 16px 50px}.demo{grid-template-columns:minmax(0,1fr)}
+  .flag{grid-template-columns:1fr;gap:3px}.review-form>*{max-width:100%}
+}
+.grid2 label{display:flex;flex-direction:column;gap:5px;font-size:.75rem;font-weight:600;color:var(--ink-mid)}
+.grid2 input,.grid2 select{font-family:inherit;font-size:.86rem;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);color:var(--ink);font-weight:400}
+.checks{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
+.cb{display:flex;flex-direction:row;align-items:center;gap:7px;font-size:.8rem;font-weight:500;color:var(--ink)}
+.cb input{width:15px;height:15px;accent-color:var(--accent)}
+.hint{font-size:.78rem;color:var(--ink-soft);line-height:1.5;margin:0 0 14px}
+.xbanner{background:var(--accent-bg);border:1px solid var(--accent);border-radius:8px;padding:13px 15px;margin-bottom:16px}
+.xbanner[hidden]{display:none!important}
+.xb-h{font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);font-family:"IBM Plex Mono",monospace;font-weight:600;margin-bottom:5px}
+.xbanner p{margin:0;font-size:.82rem;line-height:1.5;color:var(--ink-mid)}
+.sub-sec{border-top:1px solid var(--rule);padding-top:14px;margin-top:14px}
+.sub-sec-h{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);font-family:"IBM Plex Mono",monospace;margin:0 0 10px}
+.radio-row{display:flex;gap:16px;margin:8px 0;flex-wrap:wrap}
+.radio-label{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:500;cursor:pointer}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <div class="brand"><b>Refund Reconstruction</b><span>Console v2</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="demo">Demo</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="data">Policy corpus</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="how">How it works</button>
+  </div>
+  <button class="themebtn" id="themeBtn">Dark</button>
+</div></div>
+
+<main>
+<section class="panel on" id="p-demo">
+  <h2>Calculate a cancellation refund</h2>
+  <p class="sub">Upload a ticket or pick a sample. The engine resolves the policy version in force when it was booked, applies the statutory floor, and shows every line with its own confidence and preserved evidence.</p>
+  
+  <div class="explain">
+    <div class="ex-col"><div class="ex-k">From the ticket</div>
+      <p>Carrier, route, dates, fare and taxes — read off your document. <strong>There is no ticket database</strong>; the airline's records are never queried.</p></div>
+    <div class="ex-arrow">+</div>
+    <div class="ex-col"><div class="ex-k">From the corpus — the only lookup</div>
+      <p>Match the policy to the <strong>ticket and cancellation dates</strong>. Inspect preserved sources and any gaps in date coverage.</p></div>
+    <div class="ex-arrow">=</div>
+    <div class="ex-col"><div class="ex-k">Result</div>
+      <p>A line-by-line refund, confidence per line, and an explicit abstention wherever evidence does not support a number.</p></div>
+  </div>
+
+  <div class="demo">
+    <div>
+      <p class="side-h">Your ticket</p>
+      <div class="drop" id="drop">
+        <input type="file" id="file" accept="application/pdf,image/png,image/jpeg,image/webp" hidden>
+        <div class="drop-in"><div class="drop-ic">&uarr;</div>
+          <div class="drop-t">Upload a ticket</div><div class="drop-s">PDF or photo · drag here or click</div></div>
+      </div>
+      <div class="reading" id="reading" hidden><span class="spin"></span><span id="readingT">Reading ticket…</span></div>
+      <button class="addbtn" id="addBtn">Or enter details manually</button>
+      <p class="side-h" style="margin-top:20px">Sample tickets</p>
+      <div class="tickets" id="tickets"></div>
+    </div>
+
+    <div>
+      <!-- Live Cancellation Control Bar -->
+      <div class="canc-bar" id="cancBar">
+        <div class="canc-bar-top">
+          <span class="canc-bar-title">Cancellation Timing & Basis</span>
+          <div class="preset-group">
+            <button type="button" class="pbtn" id="bar-preset-120h">T-120h (5d)</button>
+            <button type="button" class="pbtn" id="bar-preset-72h">T-72h (3d)</button>
+            <button type="button" class="pbtn" id="bar-preset-24h">T-24h (1d)</button>
+          </div>
+        </div>
+        <div class="canc-bar-inputs">
+          <label>Date <input type="date" id="bar-canc-date"></label>
+          <label>Time <input type="time" id="bar-canc-time"></label>
+          <label>TZ <select id="bar-canc-tz"><option value="Asia/Kolkata">Asia/Kolkata</option><option value="UTC">UTC</option></select></label>
+          <label class="radio-label"><input type="radio" name="bar-basis" id="bar-basis-scen" value="USER_SCENARIO" checked> Scenario</label>
+          <label class="radio-label"><input type="radio" name="bar-basis" id="bar-basis-act" value="ACTUAL_RECORD"> Actual</label>
+          <label id="bar-source-wrap" hidden>Doc Ref <input type="text" id="bar-canc-source" placeholder="Email / SMS ref"></label>
+        </div>
+        <div class="canc-preview" id="bar-canc-preview">Calculating timing interval…</div>
+      </div>
+
+      <div id="out"></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="p-data">
+  <h2>Policy corpus & Coverage</h2>
+  <p class="sub">Served live from <span class="mono">engine/corpus/policies.json</span> and <span class="mono">/api/corpus/coverage</span>. Every rule verified against the evidence store by content hash.</p>
+  
+  <div class="stats" id="stats"></div>
+
+  <!-- Corpus Coverage Table -->
+  <div class="cov-sec" id="covSec">
+    <h3>Carrier Coverage Matrix (R15)</h3>
+    <p class="sub" style="margin-bottom:12px">Supported intervals, evidence class, ceilings, and identified gaps per carrier. Measured from the corpus, not asserted in prose.</p>
+    <div class="tw"><table class="scaletbl" id="covTbl">
+      <thead><tr><th>Carrier</th><th>PSS</th><th>Rules</th><th>Earliest Evidence</th><th>Latest Evidence</th><th>Quarantined</th></tr></thead>
+      <tbody id="covRows"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Quarantined Rules Section -->
+  <div class="cov-sec" id="quarantineSec" hidden>
+    <h3 style="color:var(--none)">Quarantined Rules (Integrity Gate)</h3>
+    <p class="sub" style="margin-bottom:12px">Rules excluded from resolution due to missing or mismatched evidence hash. Quarantined rules never compute a figure.</p>
+    <div class="flags" id="quarantineList"></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="rules" id="rules"></div>
+</section>
+
+<section class="panel" id="p-how">
+  <h2>How it works, and how it scales</h2>
+  <p class="sub">Six steps. Only the first is AI — everything that touches a rupee is deterministic Python.</p>
+  <div class="pipe">
+    <div class="pstep"><div class="pnum">1</div><div>
+      <div class="ptitle">Read the ticket <span class="chip c-ai">AI</span></div>
+      <div class="ptext">The uploaded PDF or image is parsed by multimodal vision extraction (Gemini), returning structured fields against a strict schema. Instructed to return null rather than guess. <strong>The only probabilistic step</strong>, and its output is presented to you in an inspection modal for review before anything is computed.</div></div></div>
+    <div class="pstep det"><div class="pnum">2</div><div>
+      <div class="ptitle">Check the document reconciles <span class="chip c-det">Deterministic</span></div>
+      <div class="ptext">Base + taxes + fees must equal the stated total, or the case <strong>blocks</strong>. Components are never adjusted to force a match.</div></div></div>
+    <div class="pstep det"><div class="pnum">3</div><div>
+      <div class="ptitle">Resolve the policy version <span class="chip c-det">Deterministic</span></div>
+      <div class="ptext">Filtered by carrier, market, fare family and the date in force. Dual-reading validation resolves under both booking date and cancellation date; open-ended observed windows stop at the evidence horizon.</div></div></div>
+    <div class="pstep det"><div class="pnum">4</div><div>
+      <div class="ptitle">Apply statute, then the fare rule <span class="chip c-det">Deterministic</span></div>
+      <div class="ptext">Statutory taxes refund by law on every Indian carrier. The penalty nets into the base fare exactly once. YQ/YR are not taxes and are handled separately.</div></div></div>
+    <div class="pstep det"><div class="pnum">5</div><div>
+      <div class="ptitle">Gate the confidence <span class="chip c-det">Deterministic</span></div>
+      <div class="ptext">Boolean gates, never a score. Rollup is restricted to material lines. A published policy table can never reach HIGH — only statute or a filed fare rule can.</div></div></div>
+    <div class="pstep stop"><div class="pnum">6</div><div>
+      <div class="ptitle">Answer, or abstain <span class="chip c-stop">Refuses</span></div>
+      <div class="ptext">Reissued, partly flown, multi-passenger, foreign currency — no figure at all. A corporate fare abstains on the fare line only, because the governing agreement is a document the client can supply; its statutory taxes still compute, and the total is labelled PARTIAL. Abstention is a result, not a failure.</div></div></div>
+  </div>
+  <div class="note go"><h4>Why abstention is the point</h4>
+    <p>A system that is usually right is worth less than one that reliably says "I cannot establish this." The failure mode of the alternative is a confident wrong number sitting in a financial record.</p></div>
+  <h2 style="margin-top:34px">Scaling</h2>
+  <p class="sub">The corpus is small by design. This is a curation problem, not a data-volume problem.</p>
+  <div class="cards">
+    <div class="card"><span class="n" id="ruleCount">—</span><h4>Rules today</h4><p>Five carriers, India domestic.</p></div>
+    <div class="card"><span class="n">~600</span><h4>Rows per year</h4><p>Carriers × families × bands × markets × versions. A spreadsheet, not a dataset.</p></div>
+    <div class="card"><span class="n">₹4</span><h4>AI cost per ticket</h4><p>Extraction only. The calculation costs nothing.</p></div>
+    <div class="card"><span class="n">₹0</span><h4>Airline data cost</h4><p>No GDS, no ATPCO, no scraping.</p></div>
+  </div>
+  <div class="tw"><table class="scaletbl">
+    <thead><tr><th>To scale from here</th><th>What it takes</th><th class="num">Effort</th></tr></thead>
+    <tbody>
+      <tr><td>Backfill history to 2019</td><td>Transcribe archived captures. SpiceJet 2021 (~90 captures), IndiGo 2019 (30+/yr), Akasa 2023, Air India 2024</td><td class="num">2–3 weeks</td></tr>
+      <tr><td>Stay current</td><td>Weekly snapshot + diff; the corpus compounds</td><td class="num">automated</td></tr>
+      <tr><td>Add the audit loop</td><td>Match entitlement against what was actually refunded — the part with commercial value</td><td class="num">3–4 months</td></tr>
+      <tr><td>Add more carriers</td><td>Same shape, more rows. International needs fare construction and multi-currency</td><td class="num">~1 wk/carrier</td></tr>
+    </tbody></table></div>
+  <div class="note"><h4>The honest ceiling</h4>
+    <p>Only 2 of 5 carriers publish an effective date for their own fee tables, so most rules are capped at LOW — we know a rule was visible on a capture date, not when it started.</p>
+    <p>A negotiated fare is governed by the client's own agreement rather than the published retail table, so the engine gives a statutory PARTIAL total and names the document it would need, rather than applying the wrong table.</p></div>
+</section>
+</main>
+
+<!-- Modal: Enter Ticket & Cancellation Details -->
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-h"><h3 id="mt">Enter ticket & cancellation details</h3><button class="x" id="closeBtn" aria-label="Close">&times;</button></div>
+    <div class="sheet-b">
+      <div class="xbanner" id="xbanner" hidden><div class="xb-h" id="xb-h"></div><p id="xb-body"></p></div>
+      
+      <!-- STEP 1 — what the document says -->
+      <div class="step" id="step1">
+      <p class="hint" id="manualHint">Fields printed on a real e-ticket. Upload a document to extract automatically, or type them here.</p>
+        <div class="step-h"><span class="step-n">1</span>
+          <div><div class="step-t">From the document</div>
+          <div class="step-s" id="step1-sub">Check every field against the ticket before computing. Extraction is the only probabilistic step in the pipeline.</div></div>
+        </div>
+
+      <div class="grid2">
+        <label>Airline<select id="f-car">
+          <option value="">Select the airline</option>
+          <option value="SG">SpiceJet</option><option value="6E">IndiGo</option>
+          <option value="AI">Air India</option><option value="IX">Air India Express</option>
+          <option value="QP">Akasa Air</option></select></label>
+        <label>Route<input id="f-route" value="DEL→BOM" maxlength="24"></label>
+        <label>Booking date<input type="date" id="f-bk" value="2025-11-20"></label>
+      </div>
+
+      <!-- Booking Time control (WP-7.2) -->
+      <div style="margin-top:10px;background:var(--surface-2);padding:10px 12px;border-radius:6px;border:1px solid var(--rule)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <label style="font-size:.78rem;font-weight:600;color:var(--ink-mid)">Booking time
+            <input type="time" id="f-book-time" disabled style="margin-left:6px;padding:4px 8px;border:1px solid var(--rule);border-radius:4px">
+          </label>
+          <label class="cb" style="margin:0;font-size:.78rem">
+            <input type="checkbox" id="f-book-time-unknown" checked> Booking time unknown / not on ticket
+          </label>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <label>Departure<input type="datetime-local" id="f-dep" value="2026-01-15T18:00"></label>
+        <label>Base fare (₹)<input type="number" id="f-base" value="6700" min="0" step="1"></label>
+        <label>GST / K3 (₹)<input type="number" id="f-k3" value="352" min="0" step="1"></label>
+        <label>UDF (₹)<input type="number" id="f-udf" value="708" min="0" step="1"></label>
+        <label>PSF (₹)<input type="number" id="f-psf" value="160" min="0" step="1"></label>
+        <label>Carrier surcharge YR (₹)<input type="number" id="f-yr" value="0" min="0" step="1"></label>
+        <label>Agency / convenience fee (₹)<input type="number" id="f-fee" value="0" min="0" step="1"></label>
+        <label>Total printed on document (₹)<input type="number" id="f-tot" placeholder="blank = auto-sum" min="0" step="1"></label>
+        <label>Passengers<input type="number" id="f-pax" value="1" min="1" step="1"></label>
+        <label>Currency<input id="f-currency" value="INR" maxlength="3"></label>
+      </div>
+
+      <div class="checks">
+        <label class="cb"><input type="checkbox" id="f-corp"> Corporate / negotiated fare</label>
+        <label class="cb"><input type="checkbox" id="f-reis"> Reissued</label>
+        <label class="cb"><input type="checkbox" id="f-part"> Partially flown</label>
+      </div>
+
+      </div><!-- /step1 -->
+
+      <!-- STEP 2 — what the document usually cannot tell us -->
+      <div class="step" id="step2" hidden>
+        <div class="step-h"><span class="step-n">2</span>
+          <div><div class="step-t">What we still need from you</div>
+          <div class="step-s">These are not computed and not guessed. The fare family decides which row of the carrier's table applies; the cancellation instant decides which band.</div></div>
+        </div>
+
+        <div class="need-box" id="ff-need">
+          <label style="display:block">Fare family
+            <select id="f-ff"></select>
+          </label>
+          <p class="need-note" id="ff-note"></p>
+        </div>
+
+      <div class="sub-sec">
+        <div class="sub-sec-h">Cancellation timing & basis</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px">
+          <span style="font-size:.76rem;color:var(--ink-soft)">Presets write into visible fields:</span>
+          <div class="preset-group">
+            <button type="button" class="pbtn" id="preset-120h">T-120h (5 days)</button>
+            <button type="button" class="pbtn" id="preset-72h">T-72h (3 days)</button>
+            <button type="button" class="pbtn" id="preset-24h">T-24h (1 day)</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label>Cancellation date<input type="date" id="f-canc-date" value="2026-01-10"></label>
+          <label>Cancellation time<input type="time" id="f-canc-time" value="18:00"></label>
+          <label>Timezone<select id="f-canc-tz"><option value="Asia/Kolkata">Asia/Kolkata (IST)</option><option value="UTC">UTC</option></select></label>
+        </div>
+
+        <div class="canc-preview" id="canc-calc-preview" style="margin:8px 0">...</div>
+
+        <div class="radio-row">
+          <label class="radio-label"><input type="radio" name="f-basis" id="f-basis-scenario" value="USER_SCENARIO" checked> Hypothetical scenario</label>
+          <label class="radio-label"><input type="radio" name="f-basis" id="f-basis-actual" value="ACTUAL_RECORD"> Actual cancellation (from a document)</label>
+        </div>
+
+        <div id="f-canc-source-wrap" style="margin-top:8px" hidden>
+          <label style="display:flex;flex-direction:column;gap:4px;font-size:.75rem;font-weight:600;color:var(--ink-mid)">
+            Cancellation document reference (required for actual cancellation)
+            <input type="text" id="f-canc-source" placeholder="e.g. Airline cancellation email / PNR notice / Credit note ref" style="padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);color:var(--ink)">
+          </label>
+        </div>
+      </div>
+
+    </div>
+      </div><!-- /step2 -->
+    <div class="sheet-f">
+      <button class="cmp" id="cancelBtn">Cancel</button>
+      <button class="cmp" id="backBtn2" hidden>&larr; Back</button>
+      <button class="primary" id="nextBtn">Next: what we still need &rarr;</button>
+      <button class="primary" id="runBtn" hidden>Compute refund</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CARS={"6E":"IndiGo","AI":"Air India","IX":"Air India Express","QP":"Akasa Air","SG":"SpiceJet"};
+const CL={HIGH:"High",MEDIUM:"Medium",LOW:"Low",INSUFFICIENT:"Insufficient",AUTHORITATIVE:"Authoritative"};
+const FAM={SG:[["SAVER","SpiceSaver / standard"]],"6E":[["","Not printed on ticket"]],
+ AI:[["","Not printed on ticket"],["ECONOMY_VALUE","Economy — Value"],["ECONOMY_CLASSIC","Economy — Classic"],
+     ["ECONOMY_FLEX","Economy — Flex"],["PREMIUM_ECONOMY_CLASSIC","Prem. Economy — Classic"],
+     ["PREMIUM_ECONOMY_FLEX","Prem. Economy — Flex"],["BUSINESS_CLASSIC","Business — Classic"],
+     ["BUSINESS_FLEX","Business — Flex"],["FIRST","First"]],
+ IX:[["VALUE","Value"],["BUSINESS","Business"],["LITE","Lite"],["CLASSIC","Classic"],["FLEX","Flex"]],
+ QP:[["SAVER","Saver"],["FLEXI","Flexi"]]};
+
+const SAMPLES=[
+ {id:"sg-before",label:"Booked BEFORE the 12-Dec-2025 rule change",car:"SG",ff:"SAVER",route:"DEL→BOM",bk:"2025-11-20",dep:"2026-01-15T18:00",base:6700,k3:352,udf:708,psf:160,yr:250,fee:250,tot:8420},
+ {id:"sg-after",label:"Identical ticket, booked AFTER the change",car:"SG",ff:"SAVER",route:"DEL→BOM",bk:"2025-12-20",dep:"2026-01-15T18:00",base:6700,k3:352,udf:708,psf:160,yr:250,fee:250,tot:8420},
+ {id:"ai-flex",label:"Air India Flex — evidence horizon reached, fare line abstains",car:"AI",ff:"ECONOMY_FLEX",route:"DEL→BOM",bk:"2026-06-01",dep:"2026-09-20T08:15",base:8900,k3:445,udf:708,psf:160,yr:0,fee:0,tot:10213},
+ {id:"qp-flexi",label:"Akasa Flexi — preserved copy predates the stated date, so LOW",car:"QP",ff:"FLEXI",route:"BLR→BOM",bk:"2026-06-10",dep:"2026-09-25T14:40",base:4800,k3:240,udf:560,psf:0,yr:0,fee:0,tot:5600},
+ {id:"6e",label:"IndiGo — table has no fare-family dimension",car:"6E",ff:"",route:"DEL→BLR",bk:"2025-10-15",dep:"2026-01-20T06:20",base:5400,k3:270,udf:708,psf:0,yr:0,fee:0,tot:6378},
+ {id:"ix",label:"AI Express Classic — single undated capture, fare line abstains",car:"IX",ff:"CLASSIC",route:"BLR→COK",bk:"2026-07-01",dep:"2026-10-15T11:05",base:3400,k3:170,udf:560,psf:0,yr:0,fee:0,tot:4130},
+ {id:"qp-gap",label:"Akasa Saver — 24-72h band, capped at 100% of airfare",car:"QP",ff:"SAVER",route:"PNQ→DEL",bk:"2026-03-01",dep:"2026-04-20T19:30",base:6200,k3:310,udf:460,psf:0,yr:0,fee:0,tot:6970},
+ {id:"ai-noff",label:"Fare family not printed — partial answer",car:"AI",ff:"",route:"DEL→BLR",bk:"2026-05-01",dep:"2026-08-18T18:00",base:6700,k3:352,udf:708,psf:160,yr:0,fee:0,tot:7920},
+ {id:"ai-value",label:"Air India Value — statute still applies, fare line abstains",car:"AI",ff:"ECONOMY_VALUE",route:"BOM→DEL",bk:"2026-05-01",dep:"2026-08-18T09:00",base:5200,k3:270,udf:708,psf:160,yr:0,fee:0,tot:6338},
+ {id:"corp",label:"Corporate negotiated fare — statutory partial",car:"SG",ff:"SAVER",route:"DEL→BOM",bk:"2026-01-10",dep:"2026-04-01T18:00",base:6700,k3:352,udf:708,psf:160,yr:0,fee:0,tot:7920,corp:true},
+ {id:"reissue",label:"Reissued ticket — must refuse",car:"SG",ff:"SAVER",route:"DEL→BOM",bk:"2026-01-10",dep:"2026-04-01T18:00",base:6700,k3:352,udf:708,psf:160,yr:0,fee:0,tot:7920,reis:true}
+];
+
+let TICKETS=SAMPLES.slice(), sel=SAMPLES[0].id, cmp=false, customN=0;
+
+// Cancellation state for active ticket
+let activeCanc={
+  date:"2026-01-10",
+  time:"18:00",
+  tz:"Asia/Kolkata",
+  basis:"USER_SCENARIO",
+  source_ref:null,
+  preset_label:"T-120h"
+};
+
+function localInstant(value,tz){
+  return new Date(value+(tz==="UTC"?"Z":"+05:30"));
+}
+function localFields(instant,tz){
+  const shifted=new Date(instant.getTime()+(tz==="UTC"?0:330*60000));
+  return {date:shifted.toISOString().slice(0,10),time:shifted.toISOString().slice(11,16)};
+}
+function defaultCancForTicket(t){
+  // A suggested starting point only — T-120h of this ticket's departure.
+  const depD=localInstant(t.dep.includes("T")?t.dep:t.dep+"T18:00",t.tz||"Asia/Kolkata");
+  const cancD=new Date(depD.getTime() - 120*3600*1000);
+  return {
+    ...localFields(cancD,t.tz||"Asia/Kolkata"),
+    tz:t.tz||"Asia/Kolkata",
+    basis:"USER_SCENARIO",
+    source_ref:null,
+    preset_label:"T-120h"
+  };
+}
+
+// The cancellation instant belongs to the TICKET it was entered against, not to the
+// page. It used to be one shared object, so switching tickets silently discarded the
+// instant you had just entered for an uploaded ticket and replaced it with a preset.
+function initActiveCancForTicket(t){
+  if(!t.canc) t.canc=defaultCancForTicket(t);
+  activeCanc=t.canc;
+  syncBarInputs();
+}
+
+function persistActiveCanc(){
+  const t=TICKETS.find(x=>x.id===sel);
+  if(t) t.canc=activeCanc;
+}
+
+function syncBarInputs(){
+  $("bar-canc-date").value=activeCanc.date;
+  $("bar-canc-time").value=activeCanc.time;
+  $("bar-canc-tz").value=activeCanc.tz;
+  if(activeCanc.basis==="ACTUAL_RECORD"){
+    $("bar-basis-act").checked=true;
+    $("bar-source-wrap").hidden=false;
+    $("bar-canc-source").value=activeCanc.source_ref||"";
+  }else{
+    $("bar-basis-scen").checked=true;
+    $("bar-source-wrap").hidden=true;
+  }
+  updateIntervalPreview("bar");
+}
+
+function updateIntervalPreview(prefix){
+  const t=TICKETS.find(x=>x.id===sel);
+  if(!t) return;
+  const depStr=prefix==="bar"?t.dep:$("f-dep").value;
+  const cancDate=$(prefix+"-canc-date").value;
+  const cancTime=$(prefix+"-canc-time").value;
+  const prevEl=$(prefix+"-canc-preview")||$("canc-calc-preview");
+  if(!cancDate||!cancTime||!depStr){
+    prevEl.textContent="Enter departure and cancellation timestamps";
+    return;
+  }
+  const depD=localInstant(depStr.includes("T")?depStr:depStr+"T18:00",prefix==="bar"?(t.tz||"Asia/Kolkata"):"Asia/Kolkata");
+  const cancD=localInstant(`${cancDate}T${cancTime}`,$(prefix+"-canc-tz").value);
+  const diffSec=Math.floor((depD.getTime()-cancD.getTime())/1000);
+  if(diffSec<0){
+    const postH=Math.abs(diffSec)/3600;
+    prevEl.textContent=`Cancelled after departure (T+${postH.toFixed(2)} h) — statutory taxes only, fare line abstains`;
+    prevEl.style.color="var(--med)";
+  }else{
+    const totalH=diffSec/3600;
+    const days=Math.floor(diffSec/86400);
+    const remH=Math.floor((diffSec%86400)/3600);
+    const remM=Math.floor((diffSec%3600)/60);
+    prevEl.textContent=`Cancelling ${days} days ${remH} hours ${remM} minutes before departure (${totalH.toFixed(2)} h / ${diffSec.toLocaleString()} s)`;
+    prevEl.style.color="var(--accent)";
+  }
+}
+
+// Preset application helper
+function applyPreset(hours, prefix){
+  const t=TICKETS.find(x=>x.id===sel);
+  if(!t) return;
+  const depStr=prefix==="bar"?t.dep:$("f-dep").value;
+  if(!depStr)return;
+  const depD=localInstant(depStr.includes("T")?depStr:depStr+"T18:00",prefix==="bar"?(t.tz||"Asia/Kolkata"):"Asia/Kolkata");
+  const cancD=new Date(depD.getTime() - hours*3600*1000);
+  const {date:dStr,time:tStr}=localFields(cancD,$(prefix+"-canc-tz").value);
+  $(prefix+"-canc-date").value=dStr;
+  $(prefix+"-canc-time").value=tStr;
+  if(prefix==="bar"){
+    activeCanc.date=dStr;
+    activeCanc.time=tStr;
+    activeCanc.basis="USER_SCENARIO";
+    persistActiveCanc();
+    activeCanc.preset_label=`T-${hours}h`;
+    activeCanc.source_ref=null;
+    syncBarInputs();
+    paint();
+  }else{
+    $("f-basis-scenario").checked=true;
+    $("f-canc-source-wrap").hidden=true;
+    updateRunBtnState();
+    updateIntervalPreview("f");
+  }
+}
+
+function setupTimingListeners(){
+  $("bar-preset-120h").onclick=()=>applyPreset(120,"bar");
+  $("bar-preset-72h").onclick=()=>applyPreset(72,"bar");
+  $("bar-preset-24h").onclick=()=>applyPreset(24,"bar");
+  $("preset-120h").onclick=()=>applyPreset(120,"f");
+  $("preset-72h").onclick=()=>applyPreset(72,"f");
+  $("preset-24h").onclick=()=>applyPreset(24,"f");
+
+  const onBarChange=()=>{
+    activeCanc.date=$("bar-canc-date").value;
+    activeCanc.time=$("bar-canc-time").value;
+    activeCanc.tz=$("bar-canc-tz").value;
+    activeCanc.basis=$("bar-basis-act").checked?"ACTUAL_RECORD":"USER_SCENARIO";
+    activeCanc.source_ref=$("bar-canc-source").value||null;
+    activeCanc.preset_label=null;
+    persistActiveCanc();
+    $("bar-source-wrap").hidden=!$("bar-basis-act").checked;
+    updateIntervalPreview("bar");
+    paint();
+  };
+  $("bar-canc-date").onchange=onBarChange;
+  $("bar-canc-time").onchange=onBarChange;
+  $("bar-canc-tz").onchange=onBarChange;
+  $("bar-basis-scen").onchange=onBarChange;
+  $("bar-basis-act").onchange=onBarChange;
+  $("bar-canc-source").oninput=onBarChange;
+
+  $("f-canc-date").onchange=()=>updateIntervalPreview("f");
+  $("f-canc-time").onchange=()=>updateIntervalPreview("f");
+  $("f-dep").onchange=()=>updateIntervalPreview("f");
+  $("f-basis-scenario").onchange=()=>{ $("f-canc-source-wrap").hidden=true; updateRunBtnState(); };
+  $("f-basis-actual").onchange=()=>{ $("f-canc-source-wrap").hidden=false; updateRunBtnState(); };
+  $("f-canc-source").oninput=updateRunBtnState;
+
+  // Booking time unknown checkbox (WP-7.2)
+  $("f-book-time-unknown").onchange=()=>{
+    const unk=$("f-book-time-unknown").checked;
+    $("f-book-time").disabled=unk;
+    if(unk) $("f-book-time").value="";
+  };
+}
+
+function updateRunBtnState(){
+  const isActual=$("f-basis-actual").checked;
+  const sourceVal=$("f-canc-source").value.trim();
+  const amounts=["f-base","f-k3","f-udf","f-psf","f-yr","f-fee","f-tot"];
+  const valid=!!($("f-car").value&&$("f-bk").value&&$("f-dep").value&&$("f-route").value.trim()&&$("f-base").value!==""&&$("f-currency").value.trim())
+    && Number.isInteger(Number($("f-pax").value)) && Number($("f-pax").value)>0
+    && amounts.every(id=>$(id).value===""||(Number.isFinite(Number($(id).value))&&Number($(id).value)>=0));
+  $("nextBtn").disabled=!valid;
+  $("runBtn").disabled=!valid||!$("f-canc-date").value||!$("f-canc-time").value||(isActual&&!sourceVal);
+}
+
+// A departure without a time cannot place the cancellation on either side of a band
+// boundary. Refuse rather than substitute a plausible hour.
+function departureLocal(t){
+  const d=String(t.dep||"");
+  if(!d.includes("T")) throw new Error(
+    "Departure time is missing. The cancellation fee depends on how many hours before "+
+    "departure the ticket is cancelled, so the time must come from the document — it is "+
+    "not assumed.");
+  return d.length===16?d+":00":d;
+}
+
+// Build API v2 payload
+const payload=(t,canc)=>{
+  const routeParts = String(t.route||"").split(/[→\-/–]|to/).map(s=>s.trim()).filter(Boolean);
+  return {
+  ticket:{
+    carrier:t.car,market:"DOMESTIC",
+    origin:routeParts[0]||"",
+    destination:routeParts[1]||routeParts[routeParts.length-1]||"",
+    route:t.route,fare_family:t.ff||null,
+    booking_date:t.bk,
+    booking_time:t.bk_time||null,
+    departure_local:departureLocal(t),
+    departure_timezone:t.tz||"Asia/Kolkata",
+    currency:t.currency||"INR",passengers:t.passengers??1,
+    base_fare:Number(t.base).toFixed(2),
+    taxes:[
+      {code:"K3",amount:Number(t.k3||0).toFixed(2)},
+      {code:"UDF",amount:Number(t.udf||0).toFixed(2)},
+      {code:"PSF",amount:Number(t.psf||0).toFixed(2)}
+    ].filter(x=>parseFloat(x.amount)>0),
+    carrier_surcharges:t.yr?[{code:"YR",amount:Number(t.yr).toFixed(2)}]:[],
+    seller_fees:t.fee?[{code:"AGENCY",amount:Number(t.fee).toFixed(2)}]:[],
+    total_paid:Number(t.tot).toFixed(2),
+    corporate:!!t.corp,reissued:!!t.reis,partially_used:!!t.part
+  },
+  cancellation:{
+    instant_local:`${canc.date}T${canc.time}:00`,
+    timezone:canc.tz||"Asia/Kolkata",
+    basis:canc.basis||"USER_SCENARIO",
+    source_ref:canc.source_ref||null,
+    preset_label:canc.preset_label||null,
+    cause:"PASSENGER_INITIATED"
+  },
+  extraction_ref:t.extraction_ref||null,
+  persist:true
+};
+};
+
+// Pull a human-readable message out of any error body. `detail` may be a string or an
+// object depending on which layer raised it, and `new Error(object)` renders as
+// "[object Object]" on screen — which is what users were seeing.
+function errText(data, res){
+  if(!data) return (res&&res.statusText)||"Request failed";
+  if(typeof data==="string") return data;
+  if(typeof data.message==="string" && data.message) return data.message;
+  const d=data.detail;
+  if(typeof d==="string" && d) return d;
+  if(d && typeof d==="object" && typeof d.message==="string") return d.message;
+  if(Array.isArray(data.errors)&&data.errors.length) return String(data.errors[0].msg||data.errors[0]);
+  return (res&&res.statusText)||"Request failed";
+}
+
+async function compute(t,canc){
+  const body=JSON.stringify(payload(t,canc||activeCanc));
+  const r=await fetch("/api/compute",{method:"POST",headers:{"Content-Type":"application/json"},body});
+  const data=await r.json().catch(()=>null);
+  if(!r.ok) throw new Error(errText(data,r));
+  return data;
+}
+
+// Render Timeline Strip (WP-7.3)
+function renderTimeline(t,r){
+  const tl=r.timeline||{};
+  const cancInstant=r.cancellation?.instant||r.cancel_instant||"";
+  const bkStr=t.bk_time?`${t.bk} ${t.bk_time}`:`${t.bk} (time not stated)`;
+  const cStr=cancInstant.replace("T"," ").slice(0,16);
+  const depStr=t.dep.replace("T"," ").slice(0,16);
+  const basisLbl=r.cancellation?.basis==="ACTUAL_RECORD"?"Actual record":"Hypothetical scenario";
+  const tzName=(t.canc&&t.canc.tz)||t.tz||"Asia/Kolkata";
+  const tzLabel=tzName==="Asia/Kolkata"?"IST":tzName;
+  const intervalStr=tl.seconds_to_departure!==undefined?
+    `${tl.hours_to_departure} h remaining (${(tl.seconds_to_departure/86400).toFixed(1)} days)`:"—";
+
+  return `<div class="timeline" id="timeline">
+    <div class="tl-node">
+      <div class="tl-k">1. Booking Date</div>
+      <div class="tl-v">${esc(bkStr)}</div>
+      <div class="tl-sub">In-force policy anchor</div>
+    </div>
+    <div class="tl-arrow">
+      <div>&rarr;</div>
+      <div class="tl-arrow-line"></div>
+      <div style="font-size:.65rem;color:var(--ink-soft)">interval</div>
+    </div>
+    <div class="tl-node">
+      <div class="tl-k">2. Cancellation (${esc(basisLbl)})</div>
+      <div class="tl-v">${esc(cStr)} ${esc(tzLabel)}</div>
+      <div class="tl-sub">${esc(intervalStr)}</div>
+    </div>
+    <div class="tl-arrow">
+      <div>&rarr;</div>
+      <div class="tl-arrow-line"></div>
+      <div style="font-size:.65rem;color:var(--accent);font-weight:600">${esc(tl.status||"—")}</div>
+    </div>
+    <div class="tl-node">
+      <div class="tl-k">3. Departure</div>
+      <div class="tl-v">${esc(depStr)} ${esc((t.tz||"Asia/Kolkata")==="Asia/Kolkata"?"IST":t.tz)}</div>
+      <div class="tl-sub">Cut-off boundary</div>
+    </div>
+  </div>`;
+}
+
+// Render Ledger with Evidence Drawer (WP-7.3)
+function ledger(r,compact){
+  let rows="";
+  (r.lines||[]).forEach((l,i)=>{
+    const ev=l.evidence||{};
+    const evId=`ev-${i}-${Math.random().toString(36).slice(2,7)}`;
+    const statedDates=(ev.stated_effective_from||ev.stated_effective_to)?
+      `${ev.stated_effective_from||"—"} to ${ev.stated_effective_to||"onward"}`:"none stated";
+    const shaShort=ev.sha256?ev.sha256.slice(0,12):null;
+
+    rows+=`<tr class="${l.contribution_minor===0?"row-off":""}">
+      <td>
+        <span class="lbl">${esc(l.label)}</span>
+        ${compact?"":`<div class="basis">${esc(l.basis||"")}</div>`}
+        ${!compact&&!ev.sha256&&l.contribution_minor>0?`<div class="basis" style="color:var(--none)"><strong>Preserved policy source missing for this component.</strong> Its source and applicable dates still need verification.</div>`:""}
+        ${(!compact && ev.clause_quote)?`
+          <button type="button" class="ev-btn" onclick="$('${evId}').classList.toggle('open')">&#9662; Evidence & Provenance</button>
+          <div class="ev-drawer" id="${evId}">
+            <div class="ev-row"><span class="ev-k">Clause Heading:</span><span class="ev-v">${esc(ev.clause_heading||"— not recorded on this rule")}</span></div>
+            <div class="ev-row"><span class="ev-k">Verbatim Quote:</span><div class="quote">${esc(ev.clause_quote)}</div></div>
+            <div class="ev-row"><span class="ev-k">Applicability Key:</span><span class="ev-v">${esc(ev.applicability_key||"UNKNOWN — the source does not state which date governs")}</span></div>
+            ${ev.why_it_matches?`<div class="ev-row"><span class="ev-k">Why It Matches:</span><span class="ev-v">${esc(ev.why_it_matches)}</span></div>`:""}
+            <div class="ev-row"><span class="ev-k">Stated Dates:</span><span class="ev-v">${esc(statedDates)}</span></div>
+            <div class="ev-row"><span class="ev-k">Captured:</span><span class="ev-v">${esc(ev.capture_date||"—")}</span></div>
+            ${ev.url?`<div class="ev-row"><span class="ev-k">Source URL:</span><span class="ev-v"><a href="${esc(ev.url)}" target="_blank" rel="noopener">${esc(ev.url)}</a></span></div>`:""}
+            ${shaShort?`<div class="ev-row"><span class="ev-k">Preserved Copy:</span><span class="ev-v"><a href="/api/evidence/${esc(ev.sha256)}" download class="mono">${esc(shaShort)}&hellip; (download copy)</a></span></div>`:""}
+          </div>`:""}
+      </td>
+      <td class="num">${l.original??"—"}</td>
+      <td class="num ${l.contribution_minor===0?"zero":""}">${esc(l.contribution)}</td>
+      <td><span class="pill p-${l.confidence}">${CL[l.confidence]}</span></td>
+    </tr>`;
+  });
+
+  const totAmount=r.total?.amount||r.refund_total;
+  return `<div class="tw"><table class="tbl"><thead><tr><th>Component</th><th class="num">Original</th><th class="num">Refund</th><th>Confidence</th></tr></thead>
+    <tbody>${rows}${totAmount?`<tr class="tot"><td>Calculated refund</td><td class="num"></td><td class="num">${esc(totAmount)}</td><td></td></tr>`:""}</tbody></table></div>`;
+}
+
+// Render Diagnostic & Review Panels (WP-7.3)
+function renderPanels(r){
+  let out="";
+  
+  // Assumptions panel
+  if(r.assumptions && r.assumptions.length){
+    out+=`<div class="diag-panel">
+      <div class="diag-h">Standing Assumptions</div>
+      <div class="flags">${r.assumptions.map(a=>`
+        <div class="flag f-info">
+          <span class="ic">${a.material?"MATERIAL":"NOTE"}</span>
+          <span><strong>${esc(a.code)}:</strong> ${esc(a.detail)}</span>
+        </div>`).join("")}</div>
+    </div>`;
+  }
+
+  // Missing evidence / unresolved panel
+  if(r.unresolved && r.unresolved.length){
+    out+=`<div class="diag-panel">
+      <div class="diag-h" style="color:var(--none)">Missing Evidence & Unresolved Conditions</div>
+      <div class="flags">${r.unresolved.map(u=>`
+        <div class="flag f-stop"><span class="ic">MISSING</span><span>${esc(u)}</span></div>`).join("")}</div>
+    </div>`;
+  }
+
+  // Conflicts panel
+  if(r.conflicts && r.conflicts.length){
+    out+=`<div class="diag-panel">
+      <div class="diag-h" style="color:var(--med)">Applicability Conflicts</div>
+      <div class="flags">${r.conflicts.map(c=>`
+        <div class="flag f-warn"><span class="ic">CONFLICT</span><span>${esc(c)}</span></div>`).join("")}</div>
+    </div>`;
+  }
+
+  // Rules rejected panel
+  if(r.rules_rejected && r.rules_rejected.length){
+    out+=`<div class="diag-panel">
+      <div class="diag-h">Rules Considered & Rejected</div>
+      <div class="flags">${r.rules_rejected.map(rj=>{
+        const o=(typeof rj==="string")?{reason_code:"REJECTED",policy_id:"",detail:rj}:rj;
+        // The detail sentence already opens with the policy id; printing both gave
+        // "SG-...: SG-...: temporally invalid".
+        let det=String(o.detail||"");
+        if(o.policy_id && det.startsWith(o.policy_id)) det=det.slice(o.policy_id.length).replace(/^\s*:\s*/,"");
+        return `<div class="flag f-warn">
+          <span class="ic">${esc(o.reason_code||"REJECTED")}</span>
+          <span>${o.policy_id?`<strong>${esc(o.policy_id)}:</strong> `:""}${esc(det)}</span>
+        </div>`;}).join("")}</div>
+    </div>`;
+  }
+
+  // Review Status Box & Action
+  const revStatus=r.review_status||"NOT_REQUIRED";
+  out+=`<div class="diag-panel">
+    <div class="diag-h">Audit & Review Status</div>
+    <div class="review-box">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div><strong>Status:</strong> <span class="pill p-${revStatus==='REVIEWED'?'HIGH':revStatus==='REVIEW_REQUIRED'?'MEDIUM':'HIGH'}">${revStatus}</span></div>
+        <div class="mono" style="font-size:.75rem;color:var(--ink-soft)">Case ID: ${esc(r.case_id||"—")}</div>
+      </div>
+      ${r.review_decision?`<p>Review decision: <strong>${esc(r.review_decision)}</strong></p>`:""}
+      ${revStatus==="REVIEW_REQUIRED"?`
+        <p style="font-size:.8rem;color:var(--ink-mid);margin:8px 0 4px">This reconstruction carries material assumptions or partial exclusions requiring reviewer sign-off.</p>
+        <div class="review-form" id="revForm-${r.case_id}">
+          <input type="text" id="rev-name-${r.case_id}" placeholder="Reviewer name (required)">
+          <select id="rev-dec-${r.case_id}"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option><option value="ESCALATED">ESCALATED</option></select>
+          <input type="text" id="rev-reason-${r.case_id}" placeholder="Verification reason / ticket note" style="flex:1;min-width:180px">
+          <button type="button" class="btn-rev" onclick="submitReview('${r.case_id}')">Submit Review</button>
+        </div>`:""}
+    </div>
+  </div>`;
+
+  return out;
+}
+
+async function submitReview(caseId){
+  const reviewer=$(`rev-name-${caseId}`).value.trim();
+  const decision=$(`rev-dec-${caseId}`).value;
+  const reason=$(`rev-reason-${caseId}`).value.trim();
+  if(!reviewer||!reason){
+    alert("A review record needs the reviewer's name and a typed reason. Neither is defaulted — the audit trail has to say who signed off and why.");
+    return;
+  }
+  try{
+    const res=await fetch(`/api/cases/${caseId}/review`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({reviewer,decision,reason})
+    });
+    if(!res.ok) throw new Error((await res.json()).message||"Review submission failed");
+    const savedRes=await fetch(`/api/cases/${caseId}`);
+    if(!savedRes.ok)throw new Error("Review saved, but the saved case could not be loaded. Reload the case to check its status.");
+    const saved=(await savedRes.json()).case;
+    const t=TICKETS.find(x=>x.id===sel);
+    if($("out").textContent.includes(caseId)){
+      paintSequence++;
+      $("out").innerHTML=view(t,{...saved.response,review_decision:saved.review?.decision||decision});
+      const c=$("cmpBtn");if(c)c.onclick=()=>{cmp=true;paint();};
+    }
+  }catch(e){
+    alert("Review error: "+e.message);
+  }
+}
+
+
+// Plain-English statement of the result.
+//
+// Every value in this sentence is read out of the computed ledger — the carrier, the
+// interval, the rule id, the fee and the total all come from the engine's response. No
+// language model writes any part of it, and no number here is generated: they are the
+// same integers the ledger holds. If a figure is not in the ledger, the sentence says so
+// rather than filling the gap.
+function plainStatement(t,r){
+  const carrier=CARS[t.car]||t.car;
+  const tl=r.timeline||{};
+  const hrs=tl.hours_to_departure;
+  const days=tl.days_to_departure_display;
+  const basisTxt=r.cancellation?.basis==="ACTUAL_RECORD"
+    ? "a cancellation time entered as an actual record"
+    : "a hypothetical cancellation you chose";
+  const when=(hrs!==undefined&&hrs!==null)
+    ? `${esc(String(hrs))} hours${days?` (about ${esc(String(days))} days)`:""} before departure`
+    : "an interval that could not be computed";
+
+  const totAmount=r.total?.amount||r.refund_total;
+  const totStatus=r.total?.status||(totAmount?"COMPLETE":"NONE");
+  const penalty=(r.lines||[]).find(l=>l.label==="Cancellation penalty");
+  const penTxt=penalty?(penalty.basis||"").match(/₹[\d,]+\.\d{2}/):null;
+
+  let s="";
+  if(totStatus==="NONE"||!totAmount){
+    s=`For this ${esc(carrier)} ticket, cancelled at ${when} (${basisTxt}), the engine could not `+
+      `establish a refund. It has not produced a figure, and the reasons are listed below.`;
+  }else{
+    s=`If this ${esc(carrier)} ticket ${esc(t.route)} were cancelled ${when} — ${basisTxt} — `+
+      `the refund works out to <strong>${esc(totAmount)}</strong>`;
+    s+=penTxt?`, after a cancellation charge of <strong>${esc(penTxt[0])}</strong> deducted from the fare.`:".";
+    if(totStatus==="PARTIAL"){
+      s+=` This is a <strong>partial</strong> figure: one or more components could not be `+
+         `established. The final refund remains undetermined. What is missing is listed below.`;
+    }
+  }
+  if(r.rule_id){
+    s+=` The charge comes from ${esc(carrier)}'s own published cancellation table `+
+       `(<span class="mono">${esc(r.rule_id)}</span>), selected using the dates and scope recorded in the policy corpus. `+
+       `Open the evidence for the applied wording, date basis and preserved copy. Missing sources are flagged separately.`;
+  }
+  if(r.review_status==="REVIEW_REQUIRED"){
+    s+=` <strong>This case needs a human review</strong> before the figure is relied on — see the `+
+       `assumptions below.`;
+  }
+  return `<div class="statement"><div class="statement-k">In plain terms</div>
+    <p>${s}</p>
+    <p class="statement-foot">Every figure above is computed in Python from the fare on your document and the
+    policy corpus. Document extraction needs your confirmation; refund arithmetic is deterministic.</p></div>`;
+}
+
+function view(t,r){
+  const pair=(t.id==="sg-before"||t.id==="sg-after");
+  const totAmount=r.total?.amount||r.refund_total;
+  const totStatus=r.total?.status||(totAmount?"COMPLETE":"NONE");
+  const excludes=r.total?.excludes||[];
+
+  return `<div class="res">
+    <div class="res-h"><div><h3>${CARS[t.car]} · ${esc(t.route)}</h3>
+      <div class="res-meta">Booked ${t.bk} · departs ${t.dep.replace("T"," ")} IST</div></div>
+      ${pair?`<button class="cmp" id="cmpBtn">Compare both booking dates &rarr;</button>`:""}</div>
+    
+    ${plainStatement(t,r)}
+
+    <div class="headline">
+      <div>
+        <div class="big-k">Calculated refund</div>
+        <div class="big ${totAmount?"":"na"}">${totAmount?esc(totAmount):"Engine abstained"}</div>
+      </div>
+      <div>
+        <div class="big-k">Result Status</div>
+        <span class="pill p-${totStatus}">${totStatus}</span>
+      </div>
+      <div>
+        <div class="big-k">Confidence</div>
+        <span class="pill p-${r.confidence}">${CL[r.confidence]}</span>
+      </div>
+      ${r.rule_id?`<div><div class="big-k">Rule applied</div><span class="mono" style="font-size:.8rem">${esc(r.rule_id)}</span></div>`:""}
+    </div>
+
+    ${renderTimeline(t,r)}
+
+    ${totStatus==="PARTIAL"?`
+      <div class="partial-callout">
+        <div class="p-ic">!</div>
+        <p><strong>Determined subtotal ${esc(totAmount)} — PARTIAL.</strong> ${excludes.length?`Excludes: ${esc(excludes.join(", "))}.`:"Some components excluded."}</p>
+      </div>`:""}
+
+    ${r.lines && r.lines.length?ledger(r,false):""}
+    
+    ${renderPanels(r)}
+
+    <div class="foot-note">
+      Calculated using the stored policy corpus. Preserved carrier sources can be downloaded where available; flagged source and date gaps require verification. <strong>Prototype estimate:</strong> the final refund must be confirmed with the airline.
+      ${r.rule_source?` Source: <a href="${esc(r.rule_source)}" target="_blank" rel="noopener">${esc(new URL(r.rule_source).hostname)}</a>`:""}
+    </div>
+  </div>`;
+}
+
+let paintSequence=0;
+async function paint(){
+  const sequence=++paintSequence;
+  const cancellation={...activeCanc};
+  $("tickets").innerHTML=TICKETS.map(t=>`<button class="tk" aria-pressed="${t.id===sel&&!cmp}" data-t="${t.id}">
+    <div class="tk-top"><span class="tk-car">${CARS[t.car]}</span><span class="tk-amt">₹${t.tot.toLocaleString("en-IN")}</span></div>
+    <div class="tk-note">${esc(t.route)} · ${esc(t.label)}</div></button>`).join("");
+  document.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{
+    sel=b.dataset.t; cmp=false;
+    const t=TICKETS.find(x=>x.id===sel);
+    if(t) initActiveCancForTicket(t);
+    paint();
+  });
+
+  const out=$("out");
+  try{
+    if(cmp){
+      const a=TICKETS.find(x=>x.id==="sg-before"),b=TICKETS.find(x=>x.id==="sg-after");
+      const [ra,rb]=await Promise.all([compute(a,cancellation),compute(b,cancellation)]);
+      if(sequence!==paintSequence)return;
+      const ma=ra.total?.minor||ra.refund_total_minor||0;
+      const mb=rb.total?.minor||rb.refund_total_minor||0;
+      const d=Math.abs(ma-mb)/100;
+      const one=(t,r,tag)=>`<div class="res"><div class="res-h"><div><h3>${tag}</h3>
+        <div class="res-meta">Booked ${t.bk} · rule ${esc(r.rule_id||"—")}</div></div></div>
+        <div class="headline"><div><div class="big-k">Refund</div><div class="big">${esc(r.total?.amount||r.refund_total)}</div></div>
+        <div><div class="big-k">Confidence</div><span class="pill p-${r.confidence}">${CL[r.confidence]}</span></div></div>${ledger(r,true)}</div>`;
+      out.innerHTML=`<div class="res-h" style="padding:0 0 14px;border:none"><div><h3 style="font-size:1.05rem">Version boundary — identical tickets, 30 days apart</h3>
+        <div class="res-meta">Same route, same fare, same ${activeCanc.preset_label||activeCanc.time} cancellation. Only the booking date differs.</div></div>
+        <button class="cmp" id="backBtn">&larr; Back to single ticket</button></div>
+        <div class="cmp-grid">${one(a,ra,"Booked before 12-Dec-2025")}${one(b,rb,"Booked after 12-Dec-2025")}</div>
+        <div class="delta"><h4>₹${d.toLocaleString("en-IN",{minimumFractionDigits:2})} difference — from the booking date alone</h4>
+        <p>No Indian carrier has a fee band near 120 hours; they cluster at 72h and 96h. So the "five days" question always lands unambiguously inside a band. What moves the answer is <strong>which version of that band was in force when the ticket was bought</strong>.</p></div>`;
+      $("backBtn").onclick=()=>{cmp=false;paint();};
+    }else{
+      const t=TICKETS.find(x=>x.id===sel);
+      const result=await compute(t,cancellation);
+      if(sequence!==paintSequence)return;
+      out.innerHTML=view(t,result);
+      const c=$("cmpBtn"); if(c) c.onclick=()=>{cmp=true;paint();};
+    }
+  }catch(e){
+    if(sequence!==paintSequence)return;
+    out.innerHTML=`<div class="res"><div class="flags"><div class="flag f-stop"><span class="ic">ERROR</span><span>${esc(e.message)}</span></div></div></div>`;
+  }
+}
+
+// ---- Policy corpus & Coverage tab (WP-7.4) ----
+let CORPUS=null, COVERAGE=null, filt="ALL";
+async function paintData(){
+  try{
+    if(!CORPUS){
+      const [cRes, covRes]=await Promise.all([fetch("/api/corpus"),fetch("/api/corpus/coverage")]);
+      CORPUS=await cRes.json();
+      COVERAGE=await covRes.json();
+      $("ruleCount").textContent=CORPUS.rules.length;
+    }
+  }catch(e){
+    console.error("Failed to load corpus",e);
+    return;
+  }
+
+  const R=CORPUS.rules, stated=R.filter(r=>r.date_basis==="STATED").length;
+  const qCount=CORPUS.quarantined?CORPUS.quarantined.length:0;
+
+  $("stats").innerHTML=[
+    ["Rules",R.length,"across 5 carriers"],
+    ["Carrier-stated dates",stated,`of ${R.length} — only Akasa & SpiceJet`],
+    ["Observed only",R.length-stated,"capped at LOW confidence"],
+    ["Quarantined",qCount,qCount?"Evidence verification failed":"0 rules quarantined"]
+  ].map(s=>`<div class="stat"><div class="stat-k">${s[0]}</div><div class="stat-v">${s[1]}</div><div class="stat-n">${s[2]}</div></div>`).join("");
+
+  // Coverage Table
+  if(COVERAGE && COVERAGE.carriers){
+    $("covRows").innerHTML=Object.entries(COVERAGE.carriers).map(([code,c])=>`<tr>
+      <td><strong>${esc(c.name)}</strong> (${esc(code)})</td>
+      <td><span class="mono">${esc(c.pss)}</span></td>
+      <td class="num">${c.rules_count}</td>
+      <td>${esc(c.earliest_evidence)}</td>
+      <td>${esc(c.latest_evidence)}</td>
+      <td class="num" style="${c.quarantined_count?'color:var(--none);font-weight:700':''}">${c.quarantined_count}</td>
+    </tr>`).join("");
+  }
+
+  // Quarantined rules
+  if(qCount>0){
+    $("quarantineSec").hidden=false;
+    $("quarantineList").innerHTML=CORPUS.quarantined.map(q=>`<div class="flag f-stop">
+      <span class="ic">QUARANTINE</span>
+      <span><strong>${esc(q.policy_id)}:</strong> ${esc(q.reason)} (${esc(q.detail||"evidence check failed")})</span>
+    </div>`).join("");
+  }else{
+    $("quarantineSec").hidden=true;
+  }
+
+  // Filters & Rules
+  $("filters").innerHTML=["ALL",...Object.keys(CARS)].map(k=>`<button class="fb" aria-pressed="${filt===k}" data-f="${k}">${k==="ALL"?"All carriers":CARS[k]}</button>`).join("");
+  document.querySelectorAll(".fb").forEach(b=>b.onclick=()=>{filt=b.dataset.f;paintData();});
+
+  $("rules").innerHTML=R.filter(r=>filt==="ALL"||r.carrier===filt).map(r=>{
+    const win=r.date_basis==="STATED"?`bookings from ${r.stated_from}${r.stated_to?" to "+r.stated_to:" onward"}`:`seen ${r.observed_from}${r.observed_to?" to "+r.observed_to:" onward"}`;
+    const fam=r.fare_families[0]==="*"?"all fare families":r.fare_families.join(", ").toLowerCase().replace(/_/g," ");
+    const isQuarantined=CORPUS.quarantined&&CORPUS.quarantined.some(q=>q.policy_id===r.policy_id);
+
+    return `<div class="rule ${isQuarantined?"quarantined":""}">
+      <button class="rule-h"><div><div class="rid">${esc(r.policy_id)}</div>
+        <div class="rmeta">${CARS[r.carrier]} · ${esc(fam)} · ${esc(win)}</div></div>
+        <div class="rtags">
+          ${isQuarantined?`<span class="pill p-INSUFFICIENT">QUARANTINED</span>`:""}
+          <span class="pill p-${r.ceiling}">${CL[r.ceiling]} max</span>
+          <span class="mono" style="font-size:.7rem;color:var(--ink-soft)">${r.date_basis}</span>
+        </div></button>
+      <div class="rule-b">
+        <div class="bands">${r.bands.map(b=>`<span class="band">T-${b.from_h}h${b.to_h===null?"+":"–"+b.to_h+"h"} &rarr; ${b.fee.kind==="UNKNOWN"?"not captured":b.fee.kind==="FARE_FULLY_FORFEITED"?"fare forfeited":"₹"+(b.fee.amount_minor/100).toLocaleString("en-IN")+(b.fee.cap?" (capped)":"")}</span>`).join("")}</div>
+        <p class="quote">${esc(r.source.clause_quote||r.source.quote||"")}</p>
+        ${r.caveats.map(c=>`<div class="cav"><span class="ic">!</span><span>${esc(c)}</span></div>`).join("")}
+        <div class="src">Captured ${esc(r.source.capture_date)} · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.url)}</a></div>
+        ${r.source.evidence_sha256?`<div class="src">Preserved artifact: <a href="/api/evidence/${esc(r.source.evidence_sha256)}" download class="mono">${esc(r.source.evidence_sha256.slice(0,16))}&hellip;</a></div>`:""}
+      </div></div>`;}).join("");
+  document.querySelectorAll(".rule-h").forEach(h=>h.onclick=()=>h.parentElement.classList.toggle("open"));
+}
+
+// Tabs & theme
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+t.dataset.p));
+  if(t.dataset.p==="data") paintData();
+});
+const tb=$("themeBtn");
+tb.onclick=()=>{const d=document.documentElement.getAttribute("data-theme")==="dark";
+  document.documentElement.setAttribute("data-theme",d?"light":"dark");tb.textContent=d?"Dark":"Light";};
+
+// Manual entry
+// Carriers whose published table has no fare-family dimension. For these the field is
+// genuinely optional; for the rest a missing brand means the fare line cannot be
+// computed at all, so the modal says which case you are in rather than leaving you to
+// discover it from an abstention afterwards.
+const FAMILY_AGNOSTIC={SG:true,"6E":true};
+function famOpts(){
+  const car=$("f-car").value;
+  const previous=$("f-ff").value, sameCarrier=$("f-ff").dataset.carrier===car;
+  $("f-ff").innerHTML=(FAM[car]||[["","Select an airline first"]]).map(([v,l])=>`<option value="${v}">${l}</option>`).join("");
+  if(sameCarrier&&[...$("f-ff").options].some(o=>o.value===previous))$("f-ff").value=previous;
+  $("f-ff").dataset.carrier=car;
+  const note=$("ff-note");
+  if(note){
+    if(FAMILY_AGNOSTIC[car]){
+      note.className="need-note";
+      note.textContent=`${CARS[car]}'s published table sets one cancellation charge for all fare families, so this field does not change the result for this carrier.`;
+    }else{
+      note.className="need-note req";
+      note.textContent=`Required for ${CARS[car]}: its table sets a different charge per fare family, and the brand is often not printed on the ticket. Without it the fare line abstains and you get statutory taxes only.`;
+    }
+  }
+}
+
+// --- two-step modal -------------------------------------------------------
+let modalStep=1;
+function showStep(n){
+  modalStep=n;
+  $("step1").hidden=(n!==1);
+  $("step2").hidden=(n!==2);
+  $("nextBtn").hidden=(n!==1);
+  $("backBtn2").hidden=(n!==2);
+  $("runBtn").hidden=(n!==2);
+  $("mt").textContent=(n===1)?"Step 1 of 2 — check what the document says"
+                             :"Step 2 of 2 — fare family & cancellation";
+  const b=document.querySelector(".sheet-b"); if(b) b.scrollTop=0;
+  if(n===2){ famOpts(); updateIntervalPreview("f"); updateRunBtnState(); }
+}
+$("f-car").onchange=()=>{famOpts();updateRunBtnState();}; famOpts();
+let pendingExtractionRef=null;
+document.querySelectorAll('.sheet-b input,.sheet-b select').forEach(e=>{
+  e.addEventListener('input',updateRunBtnState);e.addEventListener('change',updateRunBtnState);
+});
+const modal=$("modal"), openM=()=>{modal.hidden=false;showStep(1);updateRunBtnState();updateIntervalPreview("f");}, closeM=()=>{modal.hidden=true;};
+$("addBtn").onclick=()=>{pendingExtractionRef=null;$("xbanner").hidden=true;$("manualHint").hidden=false;openM();};
+$("closeBtn").onclick=closeM; $("cancelBtn").onclick=closeM;
+modal.onclick=e=>{if(e.target===modal)closeM();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden)closeM();});
+
+$("nextBtn").onclick=()=>showStep(2);
+$("backBtn2").onclick=()=>showStep(1);
+
+$("runBtn").onclick=()=>{
+  updateRunBtnState();if($("runBtn").disabled)return;
+  const n=id=>parseFloat($(id).value)||0;
+  const base=n("f-base"),k3=n("f-k3"),udf=n("f-udf"),psf=n("f-psf"),yr=n("f-yr"),fee=n("f-fee");
+  const stated=$("f-tot").value.trim();
+  const bkTime=$("f-book-time-unknown").checked?null:($("f-book-time").value||null);
+
+  const t={
+    id:"custom-"+(++customN),label:"Your ticket",car:$("f-car").value,ff:$("f-ff").value,
+    route:$("f-route").value||"—",bk:$("f-bk").value,bk_time:bkTime,dep:$("f-dep").value,
+    base,k3,udf,psf,yr,fee,tot:stated?parseFloat(stated):base+k3+udf+psf+yr+fee,
+    corp:$("f-corp").checked,reis:$("f-reis").checked,part:$("f-part").checked,
+    passengers:Number($("f-pax").value),currency:$("f-currency").value.trim().toUpperCase(),extraction_ref:pendingExtractionRef
+  };
+
+  // The cancellation instant is captured against THIS ticket, at the moment it is
+  // uploaded or entered, and travels with it.
+  t.tz="Asia/Kolkata";
+  t.canc={
+    date:$("f-canc-date").value,
+    time:$("f-canc-time").value,
+    tz:$("f-canc-tz").value,
+    basis:$("f-basis-actual").checked?"ACTUAL_RECORD":"USER_SCENARIO",
+    source_ref:$("f-basis-actual").checked?$("f-canc-source").value.trim():null,
+    preset_label:null
+  };
+  activeCanc=t.canc;
+
+  TICKETS.unshift(t); sel=t.id; cmp=false; closeM();
+  syncBarInputs();
+  paint();
+};
+
+// Upload -> /api/extract
+const drop=$("drop"),fileIn=$("file"),reading=$("reading"),readingT=$("readingT");
+drop.onclick=()=>fileIn.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add("over");};
+drop.ondragleave=()=>drop.classList.remove("over");
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove("over");if(e.dataTransfer.files[0])upload(e.dataTransfer.files[0]);};
+fileIn.onchange=()=>{if(fileIn.files[0])upload(fileIn.files[0]);fileIn.value="";};
+
+const FAMMAP={saver:"SAVER",flexi:"FLEXI",flex:"FLEX",lite:"LITE",classic:"CLASSIC",value:"VALUE",business:"BUSINESS",
+ "economy value":"ECONOMY_VALUE","economy classic":"ECONOMY_CLASSIC","economy flex":"ECONOMY_FLEX",
+ "premium economy classic":"PREMIUM_ECONOMY_CLASSIC","premium economy flex":"PREMIUM_ECONOMY_FLEX",
+ "business classic":"BUSINESS_CLASSIC","business flex":"BUSINESS_FLEX",first:"FIRST",spicesaver:"SAVER"};
+
+async function upload(f){
+  drop.hidden=true; reading.hidden=false; readingT.textContent="Reading ticket & hashing upload…";
+  const fd=new FormData(); fd.append("file",f);
+  try{
+    const res=await fetch("/api/extract",{method:"POST",body:fd});
+    const d=await res.json().catch(()=>null);
+    if(!res.ok) throw new Error(errText(d,res));
+    apply(d);
+  }catch(e){
+    const b=$("xbanner"); b.hidden=false;
+    b.style.background="var(--none-bg)"; b.style.borderColor="var(--none)";
+    $("xb-h").style.color="var(--none)"; $("xb-h").textContent="Extraction failed";
+    $("xb-body").textContent=e.message;
+    $("manualHint").hidden=false; openM();
+  }finally{ reading.hidden=true; drop.hidden=false; }
+}
+
+function apply(d){
+  const set=(id,v)=>{$(id).value=v??"";};
+  pendingExtractionRef=d.extraction_ref||null;
+  $("f-car").value=d.carrier&&FAM[d.carrier]?d.carrier:"";famOpts();
+  $("f-ff").selectedIndex=0;
+  if(d.fare_family){const k=String(d.fare_family).toLowerCase().trim();
+    const c=FAMMAP[k]||FAMMAP[k.replace(/^economy\s+/,"")];
+    if(c&&[...$("f-ff").options].some(o=>o.value===c))$("f-ff").value=c;}
+  set("f-route",d.route?String(d.route).replace(/[-–/]/g,"→"):null);
+  set("f-bk",d.booking_date);
+  
+  if(d.booking_time){
+    $("f-book-time").value=d.booking_time;
+    $("f-book-time").disabled=false;
+    $("f-book-time-unknown").checked=false;
+  }else{
+    $("f-book-time").value="";
+    $("f-book-time").disabled=true;
+    $("f-book-time-unknown").checked=true;
+  }
+
+  $("f-dep").value="";
+  if(d.departure){
+    const cleanDep = String(d.departure).replace(" ", "T").slice(0, 16);
+    set("f-dep", cleanDep);
+  }
+  set("f-base",d.base_fare);
+  $("f-k3").value=d.tax_k3??0; $("f-udf").value=d.tax_udf??0; $("f-psf").value=d.tax_psf??0;
+  $("f-yr").value=d.surcharge_yr??0; $("f-fee").value=d.agency_fee??0;
+  set("f-tot",d.total); $("f-corp").checked=!!d.corporate; $("f-reis").checked=!!d.reissued;
+  $("f-part").checked=!!d.partially_used;
+  set("f-pax",d.passenger_count);
+  set("f-currency",d.currency||"INR");
+  $("f-basis-scenario").checked=true;
+  $("f-canc-source-wrap").hidden=true;$("f-canc-source").value="";
+  $("f-canc-date").value="";$("f-canc-time").value="";$("f-canc-tz").value="Asia/Kolkata";
+  
+  // If cancellation datetime was extracted (WP-8.3)
+  if(d.cancellation_datetime){
+    const dt=d.cancellation_datetime.split("T");
+    set("f-canc-date",dt[0]);
+    if(dt[1]) set("f-canc-time",dt[1].slice(0,5));
+    $("f-basis-actual").checked=true;
+    $("f-canc-source-wrap").hidden=false;
+    $("f-canc-source").value=d.extraction_ref||"";
+  }
+
+  const bits=[];
+  if(d.carrier_seen) bits.push("Airline read as <strong>"+esc(d.carrier_seen)+"</strong>"+(d.carrier?"":" — not one of the five carriers in the corpus, so no policy will resolve"));
+  if(d.taxes_only_lumped) bits.push("The document shows a <strong>single combined tax figure</strong>. Obtain an itemised breakdown from the issuer; do not guess a split. A total that does not reconcile will be blocked.");
+  if(!d.fare_family) bits.push("<strong>No fare family printed</strong> — for Air India this means the engine will abstain on the fare line");
+  if(d.extraction_ref) bits.push("Document preserved in evidence store: <span class=\"mono\">"+d.extraction_ref.slice(0,16)+"&hellip;</span>");
+  if(Array.isArray(d.missing)&&d.missing.length) bits.push("Not on the document: <strong>"+d.missing.map(esc).join(", ")+"</strong>");
+  bits.push("Read by a model against a strict schema, instructed to return null rather than guess. <strong>Check it before computing</strong> — this is the only probabilistic step in the pipeline.");
+  
+  const b=$("xbanner"); b.hidden=false; b.style.background=""; b.style.borderColor="";
+  $("xb-h").style.color=""; $("xb-h").textContent="Extracted from your document — check before computing";
+  $("xb-body").innerHTML=bits.join("<br><br>");
+  $("manualHint").hidden=true;
+  updateRunBtnState();
+  openM();
+}
+
+// Initial setup
+setupTimingListeners();
+initActiveCancForTicket(SAMPLES[0]);
+paint();
+</script>
+</body>
+</html>
