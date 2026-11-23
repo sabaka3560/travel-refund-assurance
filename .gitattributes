@@ -1,0 +1,8 @@
+# keep these byte-exact (no line-ending conversion)
+*.pdf binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.mp3 binary
+*.ico binary
+engine/corpus/evidence/** -text
