@@ -39,3 +39,7 @@ python engine/tools/corpus_lint.py     # corpus integrity
 - `server/` — FastAPI backend and single-page console (API in `server/README.md`)
 - `benchmark/` — positive and negative benchmark cases
 - `demo_uploads/` — synthetic sample tickets
+
+## License
+
+MIT, see [LICENSE](LICENSE). Archived airline policy pages in `engine/corpus/evidence/` belong to their publishers and are included only as evidence.
